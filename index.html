@@ -165,21 +165,29 @@
       animation: fadeUp .8s .45s both;
     }
     .hero-title span.name {
-      display: inline-block;
-      background: linear-gradient(90deg, #ffcc00, #fff 30%, #ff9900 65%, #ffcc00);
-      background-size: 250% auto;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2.8s linear infinite, fadeUp .9s .6s both;
-      filter: drop-shadow(0 0 32px rgba(240,192,64,.85));
+      display: block;
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
+      background: none;
+      text-shadow:
+        0 0 60px rgba(255,100,80,.7),
+        0 0 120px rgba(255,60,60,.3),
+        0 4px 0 rgba(0,0,0,1),
+        0 2px 30px rgba(0,0,0,1);
+      animation: fadeUp .9s .6s both;
+      margin-bottom: 14px;
     }
     .hero-title .line-party {
       display: block;
-      font-size: clamp(2rem, 7vw, 5rem);
-      letter-spacing: 6px;
-      color: rgba(255,255,255,.85);
+      font-size: clamp(1.6rem, 5.5vw, 3.6rem);
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.75);
       animation: fadeUp .9s .8s both;
-      text-shadow: 0 0 50px rgba(255,90,90,.45), 0 4px 0 rgba(0,0,0,.9);
+      text-shadow: 0 2px 20px rgba(0,0,0,.9), 0 4px 0 rgba(0,0,0,.9);
+      margin-top: 8px;
+      font-family: 'Geologica', sans-serif;
+      font-weight: 400;
+      text-transform: none;
     }
 
     /* ── Hero divider ──────────────────────────────── */
@@ -190,38 +198,149 @@
       animation: fadeUp .6s 1s both;
     }
 
-    /* ── Hero event chips ──────────────────────────── */
-    .hero-chips {
-      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    /* ── Hero event info row ──────────────────────── */
+    .hero-info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      align-items: flex-start;
       animation: fadeUp .8s 1.1s both;
+      width: 100%;
+      max-width: 560px;
     }
-    .hero-chip {
-      display: flex; align-items: center; gap: 9px;
+
+    /* Big date + time card */
+    .hero-date-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(8,6,22,.96), rgba(16,10,38,.96));
+      border-radius: 24px;
+      padding: 26px 32px 20px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      flex: 1;
+      min-width: 200px;
+      max-width: 260px;
+    }
+    /* Animated gradient border */
+    .hero-date-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 24px;
+      padding: 1.5px;
+      background: linear-gradient(var(--angle,0deg),
+        #7C3AED, #EC4899, #F59E0B, #EF4444, #7C3AED);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      animation: borderRotate 4s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Ambient glow */
+    .hero-date-card::after {
+      content: '';
+      position: absolute; inset: -30px;
+      background: radial-gradient(ellipse at 50% 50%,
+        rgba(124,58,237,.18), rgba(236,72,153,.1), transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .hdc-inner { position: relative; z-index: 1; }
+
+    .hdc-label {
+      display: block;
+      font-size: .52rem; letter-spacing: 6px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 10px; font-weight: 700;
+    }
+    .hdc-label::before, .hdc-label::after { content: '—'; margin: 0 5px; opacity: .4; }
+
+    .hdc-day {
+      display: block;
+      font-size: .62rem; letter-spacing: 8px;
+      color: rgba(255,255,255,.35);
+      text-transform: uppercase; font-weight: 300;
+      margin-bottom: 2px;
+    }
+
+    .hdc-num {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(4.5rem, 18vw, 7rem);
+      line-height: .88;
+      background: linear-gradient(160deg, #FF6B6B 0%, #FF8E53 45%, #FFA07A 70%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 20px rgba(255,100,50,.5));
+    }
+
+    .hdc-month {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      color: #fff; letter-spacing: 1px;
+      margin-top: 2px;
+    }
+    .hdc-year {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(.95rem, 3vw, 1.2rem);
+      color: rgba(255,255,255,.5); letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    .hdc-divider {
+      width: 36px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      margin: 0 auto 12px;
+    }
+
+    .hdc-time {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: 1.15rem; letter-spacing: 3px;
+      color: var(--gold);
+      background: rgba(240,192,64,.08);
+      border: 1px solid rgba(240,192,64,.25);
+      border-radius: 30px;
+      padding: 6px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 18px rgba(240,192,64,.12);
+    }
+
+    .hdc-footer {
+      display: block;
+      font-size: .52rem; letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+    }
+
+    /* Location chip */
+    .hero-loc-chip {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 8px;
       backdrop-filter: blur(14px);
-      border-radius: 50px;
-      padding: 11px 22px;
-      font-size: .8rem;
-      letter-spacing: 1px;
-      font-weight: 500;
-    }
-    .hero-chip .chip-icon { font-size: 1rem; line-height: 1; }
-    .hero-chip.chip-date {
-      border: 1px solid rgba(240,192,64,.45);
-      background: rgba(240,192,64,.09);
-      color: #ffd84d;
-      box-shadow: 0 0 24px rgba(240,192,64,.14), inset 0 1px 0 rgba(255,255,255,.08);
-    }
-    .hero-chip.chip-loc {
-      border: 1px solid rgba(130,177,255,.35);
-      background: rgba(28,61,140,.18);
+      border-radius: 24px;
+      padding: 22px 20px;
+      border: 1px solid rgba(130,177,255,.3);
+      background: rgba(28,61,140,.15);
       color: #b3d0ff;
-      box-shadow: 0 0 24px rgba(28,61,140,.22), inset 0 1px 0 rgba(255,255,255,.06);
+      box-shadow: 0 0 28px rgba(28,61,140,.2), inset 0 1px 0 rgba(255,255,255,.05);
+      flex: 1; min-width: 140px; max-width: 200px;
+      text-align: center;
     }
-    .hero-chip.chip-time {
-      border: 1px solid rgba(76,175,80,.35);
-      background: rgba(76,175,80,.10);
-      color: #a5d6a7;
-      box-shadow: 0 0 24px rgba(76,175,80,.14), inset 0 1px 0 rgba(255,255,255,.06);
+    .hlc-icon { font-size: 1.8rem; }
+    .hlc-venue {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      color: #fff; letter-spacing: 1px; line-height: 1.1;
+    }
+    .hlc-city {
+      font-size: .7rem; letter-spacing: 5px;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      font-weight: 300;
     }
 
     @keyframes shimmer {
@@ -625,31 +744,234 @@
     #cake-msg.lit { color: var(--gold); }
     #cake-msg.done { color: #69F0AE; text-shadow: 0 0 20px #69F0AE; }
 
-    #cake-svg {
-      max-width: 400px;
-      width: 95%;
-      cursor: pointer;
+    /* ── CSS BIRTHDAY CAKE ─────────────────────────── */
+    .css-cake {
+      width: 300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.55));
       user-select: none;
-      filter: drop-shadow(0 24px 48px rgba(240,192,64,.35));
     }
-    .candle-flame { cursor: pointer; }
-    .candle-flame.out { display: none; }
 
-    /* Realistic flame animations */
-    .fl-glow  { animation: glowPulse .55s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 80%; }
-    .fl-outer { animation: outerFlick .4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
-    .fl-mid   { animation: midFlick .35s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
-    .fl-core  { animation: coreFlick .3s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
-    @keyframes glowPulse  { from { opacity:.5; } to { opacity:.95; } }
-    @keyframes outerFlick { from { transform: scaleX(1)   scaleY(1)    rotate(-2deg); } to { transform: scaleX(.85) scaleY(1.1)  rotate(2deg); } }
-    @keyframes midFlick   { from { transform: scaleX(1)   scaleY(1);   } to { transform: scaleX(1.12) scaleY(.92) rotate(-1deg); } }
-    @keyframes coreFlick  { from { transform: scaleX(1)   scaleY(1);   } to { transform: scaleX(.9)  scaleY(1.1); } }
+    /* ─ CANDLES ─ */
+    .cake-candles {
+      display: flex;
+      gap: 20px;
+      align-items: flex-end;
+      position: relative;
+      z-index: 4;
+      padding: 0 30px;
+      margin-bottom: -2px;
+    }
+    .c-candle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .c-candle:nth-child(2) { margin-bottom: 14px; }
+    .c-candle:nth-child(3) { margin-bottom: 6px; }
 
-    .smoke { animation: smokeDrift 1.4s ease-out forwards; transform-box: fill-box; transform-origin: 50% 100%; }
-    @keyframes smokeDrift {
-      0%   { opacity:.7; transform: translateY(0)   scale(1)   skewX(0deg); }
-      50%  { opacity:.4; transform: translateY(-18px) scale(1.4) skewX(6deg); }
-      100% { opacity:0;  transform: translateY(-40px) scale(2.2) skewX(-4deg); }
+    /* flame wrapper */
+    .c-flame-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+      transition: opacity .25s, transform .25s;
+    }
+    .c-flame-wrap.out {
+      opacity: 0; transform: scale(0); pointer-events: none;
+    }
+
+    /* glow halo */
+    .c-glow {
+      width: 34px; height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(255,195,0,.6), transparent 70%);
+      margin-bottom: -5px;
+      animation: cGL .7s ease-in-out infinite alternate;
+    }
+    @keyframes cGL { from{opacity:.35} to{opacity:.9} }
+
+    /* flame shape */
+    .c-flame {
+      width: 14px; height: 26px;
+      position: relative;
+    }
+    .c-flame::before { /* outer */
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 13px; height: 24px;
+      transform: translateX(-50%);
+      background: linear-gradient(to top, #E65100, #FF8F00, #FFD54F, #FFFDE7 92%);
+      border-radius: 50% 50% 22% 22% / 58% 58% 38% 38%;
+      animation: cFO .45s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+    .c-flame::after { /* inner core */
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 50%;
+      width: 6px; height: 14px;
+      transform: translateX(-50%);
+      background: linear-gradient(to top, #FF5722, #FFEB3B, #fff);
+      border-radius: 50% 50% 22% 22% / 58% 58% 38% 38%;
+      animation: cFI .35s ease-in-out infinite alternate-reverse;
+      transform-origin: bottom center;
+    }
+    @keyframes cFO {
+      from { transform: translateX(-50%) scaleX(1) rotate(-2deg); }
+      to   { transform: translateX(-50%) scaleX(.8) scaleY(1.09) rotate(3deg); }
+    }
+    @keyframes cFI {
+      from { transform: translateX(-50%) scaleY(1); }
+      to   { transform: translateX(-50%) scaleY(.86) scaleX(1.12); }
+    }
+    /* stagger per candle */
+    .c-candle:nth-child(2) .c-flame::before { animation-delay: -.13s; }
+    .c-candle:nth-child(3) .c-flame::before { animation-delay: -.27s; }
+    .c-candle:nth-child(4) .c-flame::before { animation-delay: -.41s; }
+
+    .c-wick {
+      width: 2px; height: 7px;
+      background: #4E342E;
+      border-radius: 1px;
+      margin-top: 0;
+    }
+
+    .c-body {
+      width: 15px;
+      border-radius: 3px 3px 0 0;
+      position: relative; overflow: hidden;
+      box-shadow: inset -3px 0 8px rgba(0,0,0,.35);
+    }
+    .c-body::after { /* shine strip */
+      content: '';
+      position: absolute; top: 0; left: 3px;
+      width: 4px; height: 100%;
+      background: rgba(255,255,255,.28);
+      border-radius: 2px;
+    }
+    .c-ring {
+      width: 21px; height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #FFD700, #B8860B);
+      box-shadow: 0 2px 4px rgba(0,0,0,.3);
+    }
+
+    /* candle colors + staggered heights */
+    .c-candle:nth-child(1) .c-body { height:46px; background:linear-gradient(to right,#880E4F,#E91E63,#F8BBD0,#E91E63,#880E4F); }
+    .c-candle:nth-child(2) .c-body { height:60px; background:linear-gradient(to right,#004D40,#00897B,#80CBC4,#00897B,#004D40); }
+    .c-candle:nth-child(3) .c-body { height:52px; background:linear-gradient(to right,#BF360C,#F4511E,#FFCCBC,#F4511E,#BF360C); }
+    .c-candle:nth-child(4) .c-body { height:44px; background:linear-gradient(to right,#1A237E,#3949AB,#9FA8DA,#3949AB,#1A237E); }
+
+    /* ─ CAKE TIERS ─ */
+    .cake-tiers {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    .cake-t {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Frosting "lid" — ellipse effect */
+    .t-lid {
+      width: 100%;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 3px 10px rgba(0,0,0,.25);
+    }
+    .t-lid::before { /* shine */
+      content: '';
+      position: absolute;
+      top: 3px; left: 18%;
+      width: 32%; height: 6px;
+      background: rgba(255,255,255,.5);
+      border-radius: 50%;
+    }
+
+    /* Body */
+    .t-body {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: -2px;
+    }
+    .t-body::before { /* top highlight */
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 28%;
+      background: rgba(255,255,255,.07);
+      pointer-events: none;
+    }
+    .t-body::after { /* bottom shadow */
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 22%;
+      background: rgba(0,0,0,.2);
+      pointer-events: none;
+    }
+    .t-label {
+      font-family: 'Dela Gothic One', cursive;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.82);
+      text-shadow: 0 1px 6px rgba(0,0,0,.5);
+      position: relative; z-index: 2;
+    }
+
+    /* Bottom rim of each tier */
+    .t-rim {
+      width: 100%;
+      height: 10px;
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      margin-top: -4px;
+      opacity: .45;
+    }
+
+    /* Tier 3 — top (purple/violet) */
+    .cake-t-top { width: 152px; }
+    .cake-t-top .t-body { height: 58px; background: linear-gradient(to right,#35006A,#7B1FA2,#CE93D8,#7B1FA2,#35006A); }
+    .cake-t-top .t-rim  { background: #1A0040; }
+    .cake-t-top .t-label { font-size: .75rem; }
+
+    /* Tier 2 — middle (blue) */
+    .cake-t-mid { width: 216px; margin-top: -3px; }
+    .cake-t-mid .t-body { height: 68px; background: linear-gradient(to right,#0A2060,#1565C0,#64B5F6,#1565C0,#0A2060); }
+    .cake-t-mid .t-rim  { background: #051030; }
+    .cake-t-mid .t-label { font-size: .85rem; }
+
+    /* Tier 1 — base (red) */
+    .cake-t-base { width: 288px; margin-top: -3px; }
+    .cake-t-base .t-body { height: 78px; background: linear-gradient(to right,#5A0000,#C62828,#EF9A9A,#C62828,#5A0000); }
+    .cake-t-base .t-rim  { background: #2A0000; }
+    .cake-t-base .t-label { font-size: 1rem; }
+
+    /* Plate */
+    .cake-plate {
+      width: 310px; height: 18px;
+      background: linear-gradient(180deg, #e0e0e0, #9e9e9e, #616161);
+      border-radius: 50%;
+      margin-top: -3px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.5);
+      position: relative; z-index: 2;
     }
 
     #blow-btn {
@@ -785,20 +1107,30 @@
   <!-- Decorative divider -->
   <div class="hero-divider"></div>
 
-  <!-- Event info chips -->
-  <div class="hero-chips">
-    <div class="hero-chip chip-date">
-      <span class="chip-icon">⚡</span>
-      20 Απριλίου 2026
+  <!-- Event info -->
+  <div class="hero-info-row">
+
+    <!-- Date + Time card -->
+    <div class="hero-date-card">
+      <div class="hdc-inner">
+        <span class="hdc-label">Ημερομηνία</span>
+        <span class="hdc-day">Κυριακή</span>
+        <span class="hdc-num">20</span>
+        <span class="hdc-month">Απριλίου</span>
+        <span class="hdc-year">2026</span>
+        <div class="hdc-divider"></div>
+        <div class="hdc-time">🕠 17:30</div>
+        <span class="hdc-footer">Μην αργήσεις!</span>
+      </div>
     </div>
-    <div class="hero-chip chip-loc">
-      <span class="chip-icon">📍</span>
-      Li La Lo · Κατερίνη
+
+    <!-- Location chip -->
+    <div class="hero-loc-chip">
+      <span class="hlc-icon">📍</span>
+      <span class="hlc-venue">Li La Lo</span>
+      <span class="hlc-city">Κατερίνη</span>
     </div>
-    <div class="hero-chip chip-time">
-      <span class="chip-icon">🕠</span>
-      17:30
-    </div>
+
   </div>
 </section>
 
@@ -953,214 +1285,72 @@
 
   <p id="cake-msg">🎂 Πάτα σε κάθε κερί για να το σβήσεις!</p>
 
-  <svg id="cake-svg" viewBox="0 0 380 360" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="plateG" cx="50%" cy="35%" r="55%">
-        <stop offset="0%" stop-color="#f2f2f2"/><stop offset="100%" stop-color="#aaaaaa"/>
-      </radialGradient>
-      <!-- Tier gradients (3D cylinder: dark edges, light center) -->
-      <linearGradient id="t1g" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#5A0000"/><stop offset="18%" stop-color="#C62828"/>
-        <stop offset="50%"  stop-color="#EF5350"/><stop offset="82%" stop-color="#C62828"/>
-        <stop offset="100%" stop-color="#5A0000"/>
-      </linearGradient>
-      <linearGradient id="t2g" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#0A2060"/><stop offset="18%" stop-color="#1565C0"/>
-        <stop offset="50%"  stop-color="#2196F3"/><stop offset="82%" stop-color="#1565C0"/>
-        <stop offset="100%" stop-color="#0A2060"/>
-      </linearGradient>
-      <linearGradient id="t3g" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#35006A"/><stop offset="18%" stop-color="#7B1FA2"/>
-        <stop offset="50%"  stop-color="#BA68C8"/><stop offset="82%" stop-color="#7B1FA2"/>
-        <stop offset="100%" stop-color="#35006A"/>
-      </linearGradient>
-      <!-- Frosting: creamy white -->
-      <radialGradient id="frg" cx="50%" cy="38%" r="58%">
-        <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EDE0D4"/>
-      </radialGradient>
-      <!-- Candle gradients: dark L, highlight C-R, dark R -->
-      <linearGradient id="cg0" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#880E4F"/><stop offset="38%" stop-color="#E91E63"/>
-        <stop offset="68%" stop-color="#F8BBD0"/><stop offset="100%" stop-color="#880E4F"/>
-      </linearGradient>
-      <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#004D40"/><stop offset="38%" stop-color="#00897B"/>
-        <stop offset="68%" stop-color="#80CBC4"/><stop offset="100%" stop-color="#004D40"/>
-      </linearGradient>
-      <linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#BF360C"/><stop offset="38%" stop-color="#F4511E"/>
-        <stop offset="68%" stop-color="#FFCCBC"/><stop offset="100%" stop-color="#BF360C"/>
-      </linearGradient>
-      <linearGradient id="cg3" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#1A237E"/><stop offset="38%" stop-color="#3949AB"/>
-        <stop offset="68%" stop-color="#9FA8DA"/><stop offset="100%" stop-color="#1A237E"/>
-      </linearGradient>
-      <!-- Flame glow radial -->
-      <radialGradient id="fgr" cx="50%" cy="68%" r="50%">
-        <stop offset="0%"   stop-color="#FFF9C4" stop-opacity=".95"/>
-        <stop offset="28%"  stop-color="#FFC107" stop-opacity=".82"/>
-        <stop offset="62%"  stop-color="#FF6D00" stop-opacity=".42"/>
-        <stop offset="100%" stop-color="#FF1744" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
+  <!-- CSS Birthday Cake -->
+  <div class="css-cake">
 
-    <!-- Drop shadow -->
-    <ellipse cx="190" cy="350" rx="158" ry="8" fill="black" opacity=".22"/>
+    <!-- 4 candles -->
+    <div class="cake-candles">
+      <div class="c-candle" onclick="blowCandle(0)">
+        <div class="c-flame-wrap" id="flame-0">
+          <div class="c-glow"></div>
+          <div class="c-flame"></div>
+        </div>
+        <div class="c-wick"></div>
+        <div class="c-body"></div>
+        <div class="c-ring"></div>
+      </div>
+      <div class="c-candle" onclick="blowCandle(1)">
+        <div class="c-flame-wrap" id="flame-1">
+          <div class="c-glow"></div>
+          <div class="c-flame"></div>
+        </div>
+        <div class="c-wick"></div>
+        <div class="c-body"></div>
+        <div class="c-ring"></div>
+      </div>
+      <div class="c-candle" onclick="blowCandle(2)">
+        <div class="c-flame-wrap" id="flame-2">
+          <div class="c-glow"></div>
+          <div class="c-flame"></div>
+        </div>
+        <div class="c-wick"></div>
+        <div class="c-body"></div>
+        <div class="c-ring"></div>
+      </div>
+      <div class="c-candle" onclick="blowCandle(3)">
+        <div class="c-flame-wrap" id="flame-3">
+          <div class="c-glow"></div>
+          <div class="c-flame"></div>
+        </div>
+        <div class="c-wick"></div>
+        <div class="c-body"></div>
+        <div class="c-ring"></div>
+      </div>
+    </div>
+
+    <!-- Tiers -->
+    <div class="cake-tiers">
+      <div class="cake-t cake-t-top">
+        <div class="t-lid"></div>
+        <div class="t-body"><span class="t-label">ΧΡΟΝΙΑ ΠΟΛΛΑ</span></div>
+        <div class="t-rim"></div>
+      </div>
+      <div class="cake-t cake-t-mid">
+        <div class="t-lid"></div>
+        <div class="t-body"><span class="t-label">AVENGERS</span></div>
+        <div class="t-rim"></div>
+      </div>
+      <div class="cake-t cake-t-base">
+        <div class="t-lid"></div>
+        <div class="t-body"><span class="t-label">ΙΩΑΝΝΗΣ</span></div>
+        <div class="t-rim"></div>
+      </div>
+    </div>
+
     <!-- Plate -->
-    <ellipse cx="190" cy="335" rx="168" ry="18" fill="url(#plateG)"/>
-    <ellipse cx="190" cy="332" rx="150" ry="10" fill="white" opacity=".12"/>
+    <div class="cake-plate"></div>
 
-    <!-- ══ TIER 1 — BASE (red) ══ -->
-    <!-- Back-bottom shadow (drawn before body so body overlaps it) -->
-    <ellipse cx="190" cy="304" rx="152" ry="15" fill="#3A0000"/>
-    <!-- Body -->
-    <rect x="38" y="232" width="304" height="72" fill="url(#t1g)"/>
-    <!-- Subtle top-highlight band -->
-    <rect x="38" y="232" width="304" height="16" fill="white" opacity=".055"/>
-    <!-- Top frosting -->
-    <ellipse cx="190" cy="232" rx="152" ry="15" fill="url(#frg)"/>
-    <ellipse cx="175" cy="230" rx="92"  ry="6"  fill="white" opacity=".2"/>
-    <!-- Front-bottom rim (in front of body) -->
-    <ellipse cx="190" cy="304" rx="152" ry="15" fill="#6B0000" opacity=".55"/>
-    <!-- Drips (teardrop shapes hanging from frosting edge) -->
-    <path d="M 72,232 Q 69,248 72,264 Q 75,248 78,232 Z" fill="white" opacity=".87"/>
-    <path d="M 104,232 Q 101,252 104,272 Q 107,252 110,232 Z" fill="white" opacity=".9"/>
-    <path d="M 138,232 Q 135,256 138,276 Q 141,256 144,232 Z" fill="white" opacity=".88"/>
-    <path d="M 170,232 Q 167,252 170,268 Q 173,252 176,232 Z" fill="white" opacity=".9"/>
-    <path d="M 202,232 Q 199,255 202,274 Q 205,255 208,232 Z" fill="white" opacity=".88"/>
-    <path d="M 232,232 Q 229,251 232,267 Q 235,251 238,232 Z" fill="white" opacity=".9"/>
-    <path d="M 262,232 Q 259,254 262,273 Q 265,254 268,232 Z" fill="white" opacity=".88"/>
-    <path d="M 290,232 Q 287,250 290,266 Q 293,250 296,232 Z" fill="white" opacity=".87"/>
-    <path d="M 316,232 Q 313,246 316,258 Q 319,246 322,232 Z" fill="white" opacity=".85"/>
-    <!-- Gold star decor -->
-    <circle cx="72"  cy="266" r="4"   fill="#FFC107" opacity=".85"/>
-    <circle cx="108" cy="280" r="3"   fill="#FFC107" opacity=".72"/>
-    <circle cx="148" cy="264" r="5"   fill="#FFC107" opacity=".9"/>
-    <circle cx="190" cy="278" r="3.5" fill="#FFC107" opacity=".8"/>
-    <circle cx="232" cy="263" r="5"   fill="#FFC107" opacity=".9"/>
-    <circle cx="272" cy="279" r="3"   fill="#FFC107" opacity=".72"/>
-    <circle cx="308" cy="267" r="4"   fill="#FFC107" opacity=".85"/>
-    <text x="190" y="298" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="22" fill="white" fill-opacity=".9" letter-spacing="4">ΙΩΑΝΝΗΣ</text>
-
-    <!-- ══ TIER 2 — MIDDLE (blue) ══ -->
-    <ellipse cx="190" cy="236" rx="114" ry="13" fill="#082060" opacity=".8"/>
-    <rect x="76" y="170" width="228" height="62" fill="url(#t2g)"/>
-    <rect x="76" y="170" width="228" height="14" fill="white" opacity=".055"/>
-    <ellipse cx="190" cy="170" rx="114" ry="13" fill="url(#frg)"/>
-    <ellipse cx="176" cy="168" rx="70"  ry="6"  fill="white" opacity=".18"/>
-    <ellipse cx="190" cy="232" rx="114" ry="13" fill="#082060" opacity=".5"/>
-    <!-- Drips -->
-    <path d="M 98,170 Q 95,188 98,206 Q 101,188 104,170 Z" fill="white" opacity=".88"/>
-    <path d="M 126,170 Q 123,192 126,210 Q 129,192 132,170 Z" fill="white" opacity=".9"/>
-    <path d="M 156,170 Q 153,195 156,214 Q 159,195 162,170 Z" fill="white" opacity=".88"/>
-    <path d="M 186,170 Q 183,193 186,212 Q 189,193 192,170 Z" fill="white" opacity=".9"/>
-    <path d="M 216,170 Q 213,194 216,213 Q 219,194 222,170 Z" fill="white" opacity=".88"/>
-    <path d="M 246,170 Q 243,191 246,208 Q 249,191 252,170 Z" fill="white" opacity=".9"/>
-    <path d="M 274,170 Q 271,188 274,204 Q 277,188 280,170 Z" fill="white" opacity=".87"/>
-    <!-- Dots -->
-    <circle cx="100" cy="196" r="3"   fill="white" opacity=".5"/>
-    <circle cx="134" cy="210" r="2.5" fill="white" opacity=".45"/>
-    <circle cx="168" cy="195" r="3.5" fill="white" opacity=".58"/>
-    <circle cx="190" cy="208" r="2.5" fill="white" opacity=".48"/>
-    <circle cx="212" cy="194" r="3.5" fill="white" opacity=".58"/>
-    <circle cx="246" cy="209" r="2.5" fill="white" opacity=".45"/>
-    <circle cx="278" cy="197" r="3"   fill="white" opacity=".5"/>
-    <text x="190" y="224" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="18" fill="white" fill-opacity=".85" letter-spacing="2">AVENGERS</text>
-
-    <!-- ══ TIER 3 — TOP (purple) ══ -->
-    <ellipse cx="190" cy="174" rx="76" ry="11" fill="#2E0058" opacity=".8"/>
-    <rect x="114" y="112" width="152" height="62" fill="url(#t3g)"/>
-    <rect x="114" y="112" width="152" height="12" fill="white" opacity=".055"/>
-    <ellipse cx="190" cy="112" rx="76" ry="11" fill="url(#frg)"/>
-    <ellipse cx="178" cy="110" rx="46" ry="5"  fill="white" opacity=".18"/>
-    <ellipse cx="190" cy="174" rx="76" ry="11" fill="#2E0058" opacity=".5"/>
-    <!-- Drips -->
-    <path d="M 128,112 Q 125,130 128,148 Q 131,130 134,112 Z" fill="white" opacity=".88"/>
-    <path d="M 152,112 Q 149,133 152,152 Q 155,133 158,112 Z" fill="white" opacity=".9"/>
-    <path d="M 177,112 Q 174,134 177,154 Q 180,134 183,112 Z" fill="white" opacity=".88"/>
-    <path d="M 203,112 Q 200,133 203,152 Q 206,133 209,112 Z" fill="white" opacity=".9"/>
-    <path d="M 228,112 Q 225,131 228,150 Q 231,131 234,112 Z" fill="white" opacity=".88"/>
-    <path d="M 250,112 Q 247,128 250,144 Q 253,128 256,112 Z" fill="white" opacity=".86"/>
-    <!-- Decor -->
-    <circle cx="128" cy="140" r="2.5" fill="#FFC107" opacity=".8"/>
-    <circle cx="252" cy="145" r="2.5" fill="#FFC107" opacity=".8"/>
-    <text x="190" y="156" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="13.5" fill="white" fill-opacity=".88" letter-spacing="1">ΧΡΟΝΙΑ ΠΟΛΛΑ</text>
-
-    <!-- ══ CANDLES (4) — staggered heights, x=157,177,203,223 ══ -->
-
-    <!-- ─ CANDLE 0 (rose) x=157, h=46 ─ -->
-    <g class="candle-group">
-      <rect x="151" y="66" width="12" height="46" rx="3.5" fill="url(#cg0)"/>
-      <rect x="154" y="68" width="3"  height="42" rx="1.5" fill="white" opacity=".22"/>
-      <path d="M 154,66 Q 151,57 152,67 Q 155,61 157,67 Q 158,57 157,66" fill="white" opacity=".32"/>
-      <rect x="150" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
-      <rect x="150" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
-      <line x1="157" y1="66" x2="157" y2="59" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="157" cy="59" r="1.5" fill="#3E2723"/>
-      <g class="candle-flame" id="flame-0" onclick="blowCandle(0)">
-        <ellipse class="fl-glow"  cx="157" cy="45" rx="16" ry="22" fill="url(#fgr)"/>
-        <ellipse class="fl-outer" cx="157" cy="47" rx="6"  ry="15" fill="#FFC107" opacity=".93"/>
-        <ellipse class="fl-mid"   cx="157" cy="49" rx="4"  ry="11" fill="#FF5722" opacity=".9"/>
-        <ellipse class="fl-core"  cx="157" cy="52" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95"/>
-        <circle  cx="157" cy="58" r="2" fill="white" opacity=".9"/>
-      </g>
-    </g>
-
-    <!-- ─ CANDLE 1 (teal) x=177, h=52 ─ -->
-    <g class="candle-group">
-      <rect x="171" y="60" width="12" height="52" rx="3.5" fill="url(#cg1)"/>
-      <rect x="174" y="62" width="3"  height="48" rx="1.5" fill="white" opacity=".22"/>
-      <path d="M 174,60 Q 171,51 172,61 Q 175,55 177,61 Q 178,51 177,60" fill="white" opacity=".3"/>
-      <rect x="170" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
-      <rect x="170" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
-      <line x1="177" y1="60" x2="177" y2="53" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="177" cy="53" r="1.5" fill="#3E2723"/>
-      <g class="candle-flame" id="flame-1" onclick="blowCandle(1)">
-        <ellipse class="fl-glow"  cx="177" cy="39" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.14s"/>
-        <ellipse class="fl-outer" cx="177" cy="41" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.12s"/>
-        <ellipse class="fl-mid"   cx="177" cy="43" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.1s"/>
-        <ellipse class="fl-core"  cx="177" cy="46" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.08s"/>
-        <circle  cx="177" cy="52" r="2" fill="white" opacity=".9"/>
-      </g>
-    </g>
-
-    <!-- ─ CANDLE 2 (orange) x=203, h=50 ─ -->
-    <g class="candle-group">
-      <rect x="197" y="62" width="12" height="50" rx="3.5" fill="url(#cg2)"/>
-      <rect x="200" y="64" width="3"  height="46" rx="1.5" fill="white" opacity=".24"/>
-      <path d="M 200,62 Q 197,53 198,63 Q 201,57 203,63 Q 204,53 203,62" fill="white" opacity=".34"/>
-      <rect x="196" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
-      <rect x="196" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
-      <line x1="203" y1="62" x2="203" y2="55" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="203" cy="55" r="1.5" fill="#3E2723"/>
-      <g class="candle-flame" id="flame-2" onclick="blowCandle(2)">
-        <ellipse class="fl-glow"  cx="203" cy="41" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.26s"/>
-        <ellipse class="fl-outer" cx="203" cy="43" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.24s"/>
-        <ellipse class="fl-mid"   cx="203" cy="45" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.22s"/>
-        <ellipse class="fl-core"  cx="203" cy="48" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.2s"/>
-        <circle  cx="203" cy="54" r="2" fill="white" opacity=".9"/>
-      </g>
-    </g>
-
-    <!-- ─ CANDLE 3 (indigo) x=223, h=44 ─ -->
-    <g class="candle-group">
-      <rect x="217" y="68" width="12" height="44" rx="3.5" fill="url(#cg3)"/>
-      <rect x="220" y="70" width="3"  height="40" rx="1.5" fill="white" opacity=".22"/>
-      <path d="M 220,68 Q 217,59 218,69 Q 221,63 223,69 Q 224,59 223,68" fill="white" opacity=".3"/>
-      <rect x="216" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
-      <rect x="216" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
-      <line x1="223" y1="68" x2="223" y2="61" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="223" cy="61" r="1.5" fill="#3E2723"/>
-      <g class="candle-flame" id="flame-3" onclick="blowCandle(3)">
-        <ellipse class="fl-glow"  cx="223" cy="47" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.38s"/>
-        <ellipse class="fl-outer" cx="223" cy="49" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.36s"/>
-        <ellipse class="fl-mid"   cx="223" cy="51" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.34s"/>
-        <ellipse class="fl-core"  cx="223" cy="54" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.32s"/>
-        <circle  cx="223" cy="60" r="2" fill="white" opacity=".9"/>
-      </g>
-    </g>
-
-  </svg>
+  </div>
 
   <br/>
   <button id="blow-btn" onclick="blowAll()">💨 Σβήσε Όλα!</button>
