@@ -170,12 +170,11 @@
       -webkit-text-fill-color: #ffffff;
       background: none;
       text-shadow:
-        0 0 60px rgba(255,100,80,.7),
-        0 0 120px rgba(255,60,60,.3),
         0 4px 0 rgba(0,0,0,1),
-        0 2px 30px rgba(0,0,0,1);
+        0 2px 30px rgba(0,0,0,1),
+        0 0 60px rgba(0,0,0,.9);
       animation: fadeUp .9s .6s both;
-      margin-bottom: 14px;
+      margin-bottom: 4px;
     }
     .hero-title .line-party {
       display: block;
@@ -317,31 +316,22 @@
       color: rgba(255,255,255,.25);
     }
 
-    /* Location chip */
+    /* Simple location chip */
     .hero-loc-chip {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 8px;
+      display: flex; align-items: center; gap: 9px;
       backdrop-filter: blur(14px);
-      border-radius: 24px;
-      padding: 22px 20px;
-      border: 1px solid rgba(130,177,255,.3);
-      background: rgba(28,61,140,.15);
+      border-radius: 50px;
+      padding: 12px 22px;
+      border: 1px solid rgba(130,177,255,.32);
+      background: rgba(28,61,140,.16);
       color: #b3d0ff;
-      box-shadow: 0 0 28px rgba(28,61,140,.2), inset 0 1px 0 rgba(255,255,255,.05);
-      flex: 1; min-width: 140px; max-width: 200px;
-      text-align: center;
+      box-shadow: 0 0 24px rgba(28,61,140,.18), inset 0 1px 0 rgba(255,255,255,.06);
+      font-size: .85rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+      white-space: nowrap;
     }
-    .hlc-icon { font-size: 1.8rem; }
-    .hlc-venue {
-      font-family: 'Dela Gothic One', cursive;
-      font-size: clamp(1.1rem, 4vw, 1.4rem);
-      color: #fff; letter-spacing: 1px; line-height: 1.1;
-    }
-    .hlc-city {
-      font-size: .7rem; letter-spacing: 5px;
-      text-transform: uppercase; color: rgba(255,255,255,.4);
-      font-weight: 300;
-    }
+    .hlc-icon { font-size: 1rem; line-height: 1; }
 
     @keyframes shimmer {
       from { background-position: 0% center; }
@@ -1104,13 +1094,6 @@
 
   <div class="lightning"></div>
 
-  <!-- Top tag -->
-  <div class="hero-tag">
-    <span class="tag-dot"></span>
-    Marvel Avengers Party
-    <span class="tag-dot"></span>
-  </div>
-
   <!-- Main title -->
   <h2 class="hero-title">
     <span class="line-soft">Ο μικρός μας ήρωας</span>
@@ -1141,8 +1124,7 @@
     <!-- Location chip -->
     <div class="hero-loc-chip">
       <span class="hlc-icon">📍</span>
-      <span class="hlc-venue">Li La Lo</span>
-      <span class="hlc-city">Κατερίνη</span>
+      Li La Lo · Κατερίνη
     </div>
 
   </div>
