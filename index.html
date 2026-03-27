@@ -174,7 +174,7 @@
         0 2px 30px rgba(0,0,0,1),
         0 0 60px rgba(0,0,0,.9);
       animation: fadeUp .9s .6s both;
-      margin-bottom: 4px;
+      margin-bottom: 20px;
     }
     .hero-title .line-party {
       display: block;
@@ -183,10 +183,10 @@
       color: rgba(255,255,255,.75);
       animation: fadeUp .9s .8s both;
       text-shadow: 0 2px 20px rgba(0,0,0,.9), 0 4px 0 rgba(0,0,0,.9);
-      margin-top: 8px;
       font-family: 'Geologica', sans-serif;
       font-weight: 400;
       text-transform: none;
+      margin-bottom: 20px;
     }
 
     /* ── Hero divider ──────────────────────────────── */
@@ -197,141 +197,43 @@
       animation: fadeUp .6s 1s both;
     }
 
-    /* ── Hero event info row ──────────────────────── */
-    .hero-info-row {
+    /* ── Hero simple info line ────────────────────── */
+    .hero-info-line {
       display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
       animation: fadeUp .8s 1.1s both;
-      width: 100%;
-      max-width: 560px;
+      background: rgba(0,0,0,.38);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      padding: 14px 28px;
     }
-
-    /* Big date + time card */
-    .hero-date-card {
-      position: relative;
-      background: linear-gradient(145deg, rgba(8,6,22,.96), rgba(16,10,38,.96));
-      border-radius: 24px;
-      padding: 26px 32px 20px;
-      text-align: center;
-      backdrop-filter: blur(20px);
-      overflow: hidden;
-      flex: 1;
-      min-width: 200px;
-      max-width: 260px;
+    .hil-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
     }
-    /* Animated gradient border */
-    .hero-date-card::before {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: 24px;
-      padding: 1.5px;
-      background: linear-gradient(var(--angle,0deg),
-        #7C3AED, #EC4899, #F59E0B, #EF4444, #7C3AED);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      animation: borderRotate 4s linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Ambient glow */
-    .hero-date-card::after {
-      content: '';
-      position: absolute; inset: -30px;
-      background: radial-gradient(ellipse at 50% 50%,
-        rgba(124,58,237,.18), rgba(236,72,153,.1), transparent 70%);
-      z-index: -1;
-      pointer-events: none;
-    }
-    .hdc-inner { position: relative; z-index: 1; }
-
-    .hdc-label {
-      display: block;
-      font-size: .52rem; letter-spacing: 6px;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 10px; font-weight: 700;
-    }
-    .hdc-label::before, .hdc-label::after { content: '—'; margin: 0 5px; opacity: .4; }
-
-    .hdc-day {
-      display: block;
-      font-size: .62rem; letter-spacing: 8px;
-      color: rgba(255,255,255,.35);
-      text-transform: uppercase; font-weight: 300;
-      margin-bottom: 2px;
-    }
-
-    .hdc-num {
-      display: block;
+    .hil-item {
       font-family: 'Dela Gothic One', cursive;
-      font-size: clamp(4.5rem, 18vw, 7rem);
-      line-height: .88;
-      background: linear-gradient(160deg, #FF6B6B 0%, #FF8E53 45%, #FFA07A 70%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 20px rgba(255,100,50,.5));
-    }
-
-    .hdc-month {
-      display: block;
-      font-family: 'Dela Gothic One', cursive;
-      font-size: clamp(1.1rem, 4vw, 1.5rem);
-      color: #fff; letter-spacing: 1px;
-      margin-top: 2px;
-    }
-    .hdc-year {
-      display: block;
-      font-family: 'Dela Gothic One', cursive;
-      font-size: clamp(.95rem, 3vw, 1.2rem);
-      color: rgba(255,255,255,.5); letter-spacing: 3px;
-      margin-bottom: 14px;
-    }
-
-    .hdc-divider {
-      width: 36px; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-      margin: 0 auto 12px;
-    }
-
-    .hdc-time {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-family: 'Dela Gothic One', cursive;
-      font-size: 1.15rem; letter-spacing: 3px;
-      color: var(--gold);
-      background: rgba(240,192,64,.08);
-      border: 1px solid rgba(240,192,64,.25);
-      border-radius: 30px;
-      padding: 6px 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 0 18px rgba(240,192,64,.12);
-    }
-
-    .hdc-footer {
-      display: block;
-      font-size: .52rem; letter-spacing: 5px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.25);
-    }
-
-    /* Simple location chip */
-    .hero-loc-chip {
-      display: flex; align-items: center; gap: 9px;
-      backdrop-filter: blur(14px);
-      border-radius: 50px;
-      padding: 12px 22px;
-      border: 1px solid rgba(130,177,255,.32);
-      background: rgba(28,61,140,.16);
-      color: #b3d0ff;
-      box-shadow: 0 0 24px rgba(28,61,140,.18), inset 0 1px 0 rgba(255,255,255,.06);
-      font-size: .85rem;
-      letter-spacing: 1px;
-      font-weight: 500;
+      font-size: clamp(.88rem, 2.8vw, 1.05rem);
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.9);
       white-space: nowrap;
     }
-    .hlc-icon { font-size: 1rem; line-height: 1; }
+    .hil-date { color: var(--gold); }
+    .hil-time { color: #ffffff; }
+    .hil-loc  { color: rgba(255,255,255,.55); font-size: clamp(.78rem, 2.4vw, .9rem); letter-spacing: 2px; }
+
+    .hil-sep {
+      width: 1px; height: 14px;
+      background: rgba(255,255,255,.25);
+      margin: 0 14px;
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
 
     @keyframes shimmer {
       from { background-position: 0% center; }
@@ -1097,36 +999,20 @@
   <!-- Main title -->
   <h2 class="hero-title">
     <span class="line-soft">Ο μικρός μας ήρωας</span>
-    <span class="name">ΙΩΑΝΝΗΣ</span><br>
+    <span class="name">ΙΩΑΝΝΗΣ</span>
     <span class="line-party">Σε καλεί στο Πάρτι του!</span>
   </h2>
 
-  <!-- Decorative divider -->
-  <div class="hero-divider"></div>
-
-  <!-- Event info -->
-  <div class="hero-info-row">
-
-    <!-- Date + Time card -->
-    <div class="hero-date-card">
-      <div class="hdc-inner">
-        <span class="hdc-label">Ημερομηνία</span>
-        <span class="hdc-day">Κυριακή</span>
-        <span class="hdc-num">20</span>
-        <span class="hdc-month">Απριλίου</span>
-        <span class="hdc-year">2026</span>
-        <div class="hdc-divider"></div>
-        <div class="hdc-time">🕠 17:30</div>
-        <span class="hdc-footer">Μην αργήσεις!</span>
-      </div>
+  <!-- Simple event info line -->
+  <div class="hero-info-line">
+    <div class="hil-row">
+      <span class="hil-item hil-date">20 Απριλίου 2026</span>
+      <span class="hil-sep"></span>
+      <span class="hil-item hil-time">17:30</span>
     </div>
-
-    <!-- Location chip -->
-    <div class="hero-loc-chip">
-      <span class="hlc-icon">📍</span>
-      Li La Lo · Κατερίνη
+    <div class="hil-row">
+      <span class="hil-item hil-loc">Li La Lo, Κατερίνη</span>
     </div>
-
   </div>
 </section>
 
