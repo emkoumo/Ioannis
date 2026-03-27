@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>🦸 Γενέθλια Ιωάννη – Avengers Party!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Geologica:wght@100..900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --red:    #E23636;
+      --gold:   #F0C040;
+      --blue:   #1C3D8C;
+      --dark:   #07071A;
+      --darker: #04040E;
+      --glow-r: rgba(226,54,54,.6);
+      --glow-g: rgba(76,175,80,.6);
+      --glow-b: rgba(28,61,140,.6);
+    }
+
+    body {
+      background: var(--dark);
+      color: #fff;
+      font-family: 'Geologica', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── CANVAS PARTICLES ───────────────────────────────── */
+    #stars-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SECTIONS SHARED ────────────────────────────────── */
+    section { position: relative; z-index: 1; }
+
+    /* ── LIGHTNING OVERLAY ───────────────────────────────── */
+    .lightning {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 3;
+    }
+    .lightning::before, .lightning::after {
+      content: '';
+      position: absolute;
+      top: 0; width: 2px; height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, #fff 40%, var(--gold) 50%, transparent 100%);
+      opacity: 0;
+      animation: strike 4s infinite;
+    }
+    .lightning::before { left: 20%; animation-delay: 0s; }
+    .lightning::after  { left: 80%; animation-delay: 2.1s; }
+    @keyframes strike {
+      0%,88%,100% { opacity:0; transform: scaleY(0) skewX(10deg); }
+      90%          { opacity:1; transform: scaleY(1) skewX(-5deg); }
+      95%          { opacity:.3; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 1 – HERO
+    ══════════════════════════════════════════════════════ */
+    #hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 20px 80px;
+      background: var(--dark);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Video background */
+    #hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      #hero-video { object-position: center top; }
+    }
+
+    /* Multi-layer overlay: keeps text legible, adds cinematic vignette */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(4,4,14,.65) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(4,4,14,.88) 0%,
+          rgba(4,4,14,.25) 30%,
+          rgba(4,4,14,.35) 60%,
+          rgba(4,4,14,.95) 100%
+        );
+    }
+
+    /* All direct hero children above overlay */
+    #hero > *:not(#hero-video):not(.hero-overlay) {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ── Hero top tag ─────────────────────────────── */
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: .62rem; letter-spacing: 5px; text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gold);
+      border: 1px solid rgba(240,192,64,.4);
+      border-radius: 40px;
+      padding: 9px 24px;
+      margin-bottom: 30px;
+      background: rgba(240,192,64,.06);
+      backdrop-filter: blur(10px);
+      animation: fadeUp .7s .2s both;
+      box-shadow: 0 0 28px rgba(240,192,64,.12), inset 0 0 16px rgba(240,192,64,.04);
+    }
+    .hero-tag .tag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      animation: tagDotPulse 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes tagDotPulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .3; transform: scale(.55); }
+    }
+
+    /* ── Hero main title ───────────────────────────── */
+    .hero-title {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(3.2rem, 12vw, 8.5rem);
+      text-align: center;
+      line-height: .98;
+      margin: 0 0 6px;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow:
+        0 0 80px rgba(226,54,54,.55),
+        0 4px 0 rgba(0,0,0,.95),
+        0 2px 30px rgba(0,0,0,1);
+    }
+    .hero-title .line-soft {
+      display: block;
+      font-family: 'Geologica', sans-serif;
+      font-size: clamp(1rem, 3.5vw, 1.8rem);
+      font-weight: 300;
+      letter-spacing: 9px;
+      color: rgba(255,255,255,.55);
+      text-shadow: none;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      animation: fadeUp .8s .45s both;
+    }
+    .hero-title span.name {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffcc00, #fff 30%, #ff9900 65%, #ffcc00);
+      background-size: 250% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 2.8s linear infinite, fadeUp .9s .6s both;
+      filter: drop-shadow(0 0 32px rgba(240,192,64,.85));
+    }
+    .hero-title .line-party {
+      display: block;
+      font-size: clamp(2rem, 7vw, 5rem);
+      letter-spacing: 6px;
+      color: rgba(255,255,255,.85);
+      animation: fadeUp .9s .8s both;
+      text-shadow: 0 0 50px rgba(255,90,90,.45), 0 4px 0 rgba(0,0,0,.9);
+    }
+
+    /* ── Hero divider ──────────────────────────────── */
+    .hero-divider {
+      width: 100px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), rgba(226,54,54,.9), transparent);
+      margin: 26px auto 28px;
+      animation: fadeUp .6s 1s both;
+    }
+
+    /* ── Hero event chips ──────────────────────────── */
+    .hero-chips {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      animation: fadeUp .8s 1.1s both;
+    }
+    .hero-chip {
+      display: flex; align-items: center; gap: 9px;
+      backdrop-filter: blur(14px);
+      border-radius: 50px;
+      padding: 11px 22px;
+      font-size: .8rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .hero-chip .chip-icon { font-size: 1rem; line-height: 1; }
+    .hero-chip.chip-date {
+      border: 1px solid rgba(240,192,64,.45);
+      background: rgba(240,192,64,.09);
+      color: #ffd84d;
+      box-shadow: 0 0 24px rgba(240,192,64,.14), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .hero-chip.chip-loc {
+      border: 1px solid rgba(130,177,255,.35);
+      background: rgba(28,61,140,.18);
+      color: #b3d0ff;
+      box-shadow: 0 0 24px rgba(28,61,140,.22), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    @keyframes shimmer {
+      from { background-position: 0% center; }
+      to   { background-position: 200% center; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(30px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 2 – HEROES GRID
+    ══════════════════════════════════════════════════════ */
+    #heroes-section {
+      padding: 80px 24px;
+      background: linear-gradient(180deg, var(--dark) 0%, #0e0e2a 100%);
+    }
+    .section-title {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(240,192,64,.5);
+    }
+    .section-sub {
+      text-align: center;
+      color: rgba(255,255,255,.5);
+      font-size: .9rem;
+      letter-spacing: 2px;
+      margin-bottom: 60px;
+      text-transform: uppercase;
+    }
+
+    .heroes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-card {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      opacity: 0; transform: translateY(50px);
+      transition: opacity .6s, transform .6s;
+    }
+    .hero-card.visible { opacity:1; transform: translateY(0); }
+
+    .hero-card .card-inner {
+      padding: 0 0 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      position: relative; z-index:1;
+      transition: transform .3s;
+    }
+    .hero-card .card-text {
+      padding: 20px 24px 0;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      width: 100%;
+    }
+    .hero-card:hover .card-inner { transform: translateY(-4px); }
+
+    .hero-card .icon {
+      width: 100%;
+      height: 210px;
+      display: flex; align-items: flex-end; justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 0 10px;
+      background: rgba(0,0,0,.3);
+    }
+    .hero-card .icon img {
+      height: 200px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      object-position: bottom;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.7));
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      display: block;
+    }
+    .hero-card:hover .icon img { transform: scale(1.1) translateY(-8px); }
+    .hero-card h3 {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: 1.9rem;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+    .hero-card p {
+      font-size: .85rem;
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .hero-card .power-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .hero-card .power-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 1.2s .3s cubic-bezier(.4,0,.2,1);
+    }
+    .hero-card.visible .power-fill { width: var(--pw); }
+
+    /* per-hero theming */
+    #h-ironman { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); border: 1px solid rgba(183,28,28,.4); }
+    #h-ironman .icon { background: radial-gradient(circle, #B71C1C, #8B0000); }
+    #h-ironman .power-fill { background: linear-gradient(90deg, #B71C1C, var(--gold)); }
+    #h-ironman h3 { color: var(--gold); }
+    #h-ironman::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 70% 30%, rgba(183,28,28,.25), transparent 60%); }
+
+    #h-hulk { background: linear-gradient(135deg, #001a00 0%, #003d00 100%); border: 1px solid rgba(76,175,80,.4); }
+    #h-hulk .icon { background: radial-gradient(circle, #388E3C, #1B5E20); }
+    #h-hulk .power-fill { background: linear-gradient(90deg, #4CAF50, #8BC34A); }
+    #h-hulk h3 { color: #69F0AE; }
+    #h-hulk::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 30% 70%, rgba(76,175,80,.2), transparent 60%); }
+
+    #h-thor { background: linear-gradient(135deg, #00001a 0%, #001040 100%); border: 1px solid rgba(33,150,243,.4); }
+    #h-thor .icon { background: radial-gradient(circle, #1565C0, #0D47A1); }
+    #h-thor .power-fill { background: linear-gradient(90deg, #2196F3, #80D8FF); }
+    #h-thor h3 { color: #82B1FF; }
+    #h-thor::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% 20%, rgba(33,150,243,.2), transparent 60%); }
+
+    #h-spider { background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 100%); border: 1px solid rgba(211,47,47,.4); }
+    #h-spider .icon { background: radial-gradient(circle, #D32F2F, #B71C1C); }
+    #h-spider .power-fill { background: linear-gradient(90deg, #FF5252, #FF1744); }
+    #h-spider h3 { color: #FF8A80; }
+    #h-spider::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 80% 80%, rgba(211,47,47,.2), transparent 60%); }
+
+    #h-cap { background: linear-gradient(135deg, #00001a 0%, #001a3d 100%); border: 1px solid rgba(63,81,181,.4); }
+    #h-cap .icon { background: radial-gradient(circle, #3F51B5, #1A237E); }
+    #h-cap .power-fill { background: linear-gradient(90deg, #3F51B5, #E53935); }
+    #h-cap h3 { color: #8C9EFF; }
+    #h-cap::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 20% 50%, rgba(63,81,181,.2), transparent 60%); }
+
+    #h-thor2 { background: linear-gradient(135deg, #1a001a 0%, #2d0040 100%); border: 1px solid rgba(156,39,176,.4); }
+    #h-thor2 .icon { background: radial-gradient(circle, #7B1FA2, #4A148C); }
+    #h-thor2 .power-fill { background: linear-gradient(90deg, #9C27B0, #E040FB); }
+    #h-thor2 h3 { color: #EA80FC; }
+    #h-thor2::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 60% 40%, rgba(156,39,176,.2), transparent 60%); }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 3 – EVENT DETAILS (MISSION CARDS)
+    ══════════════════════════════════════════════════════ */
+    #details {
+      padding: 80px 24px 60px;
+      background: linear-gradient(180deg, #0e0e2a 0%, var(--dark) 100%);
+      overflow: hidden;
+    }
+
+    .mission-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 28px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .mission-card {
+      position: relative;
+      border-radius: 28px;
+      padding: 52px 36px;
+      text-align: center;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity .8s, transform .8s, box-shadow .4s;
+      cursor: default;
+    }
+    .mission-card.visible { opacity: 1; transform: translateY(0); }
+    .mission-card:hover { transform: translateY(-8px); }
+
+    /* Animated glowing border */
+    .mission-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 28px;
+      padding: 1.5px;
+      background: linear-gradient(var(--angle, 0deg),
+        var(--gold), var(--red), var(--blue), var(--gold));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      animation: borderRotate 4s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+    @keyframes borderRotate { to { --angle: 360deg; } }
+
+    .mc-date {
+      background: linear-gradient(145deg, #1a0206 0%, #2d0508 50%, #0a0710 100%);
+      box-shadow: 0 24px 70px rgba(226,54,54,.2), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .mc-date:hover { box-shadow: 0 32px 90px rgba(226,54,54,.35), inset 0 1px 0 rgba(255,255,255,.06); }
+
+    .mc-loc {
+      background: linear-gradient(145deg, #020515 0%, #050828 50%, #070a10 100%);
+      box-shadow: 0 24px 70px rgba(28,61,140,.25), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .mc-loc:hover { box-shadow: 0 32px 90px rgba(28,61,140,.4), inset 0 1px 0 rgba(255,255,255,.06); }
+
+    /* Large ghost bg decoration */
+    .mc-bg-dec {
+      position: absolute;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: 11rem; line-height: 1;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: .04;
+      pointer-events: none;
+      letter-spacing: -4px;
+      user-select: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+    .mission-card .mc-content { position: relative; z-index: 1; }
+
+    .mc-label {
+      display: block;
+      font-size: .58rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+    .mc-label::before, .mc-label::after { content: '—'; margin: 0 8px; opacity: .4; }
+
+    .mc-day-name {
+      display: block;
+      font-weight: 300;
+      font-size: .78rem;
+      letter-spacing: 8px;
+      color: rgba(255,255,255,.38);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .mc-date-num {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(6.5rem, 22vw, 10rem);
+      line-height: .9;
+      background: linear-gradient(135deg, #ff6b6b 0%, var(--gold) 50%, #ff6b6b 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite, numGlow 2.5s ease-in-out infinite;
+      margin-bottom: 6px;
+    }
+    @keyframes numGlow {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(240,192,64,.35)); }
+      50%      { filter: drop-shadow(0 0 32px rgba(240,192,64,.9)); }
+    }
+
+    .mc-month {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+      letter-spacing: 5px;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 12px;
+    }
+
+    .mc-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 14px auto;
+    }
+
+    .mc-sub {
+      display: block;
+      font-size: .75rem;
+      color: rgba(255,255,255,.3);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Location pin decoration */
+    .mc-loc-pin {
+      width: 44px; height: 56px;
+      margin: 0 auto 22px;
+      position: relative;
+    }
+    .mc-loc-pin::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 38px; height: 38px;
+      border-radius: 50% 50% 50% 0;
+      transform: translateX(-50%) rotate(-45deg);
+      background: linear-gradient(135deg, #ff4444, var(--red));
+      box-shadow: 0 0 22px rgba(226,54,54,.7), 0 0 50px rgba(226,54,54,.3);
+      animation: pinBounce 2s ease-in-out infinite;
+    }
+    .mc-loc-pin::after {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+    }
+    @keyframes pinBounce {
+      0%,100% { box-shadow: 0 0 22px rgba(226,54,54,.7), 0 0 50px rgba(226,54,54,.3); top: 0; }
+      50%      { box-shadow: 0 0 36px rgba(226,54,54,1), 0 0 80px rgba(226,54,54,.5); top: -6px; }
+    }
+
+    .mc-venue {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(2rem, 7vw, 3.6rem);
+      letter-spacing: 3px;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #82B1FF, #fff 50%, #82B1FF);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 4s linear infinite;
+      margin-bottom: 6px;
+    }
+
+    .mc-city {
+      display: block;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      letter-spacing: 8px;
+      color: var(--gold);
+      margin-bottom: 12px;
+      animation: cityPulse 3s ease-in-out infinite;
+    }
+    @keyframes cityPulse {
+      0%,100% { text-shadow: 0 0 18px rgba(240,192,64,.3); }
+      50%      { text-shadow: 0 0 40px rgba(240,192,64,.9), 0 0 80px rgba(240,192,64,.4); }
+    }
+
+    /* countdown */
+    #countdown {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: nowrap;
+      margin-top: 56px;
+    }
+    .cd-box {
+      background: rgba(240,192,64,.08);
+      border: 1px solid rgba(240,192,64,.22);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      min-width: 70px;
+      flex: 1; max-width: 120px;
+    }
+    .cd-num {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+    .cd-lbl {
+      font-size: .6rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,.4); margin-top: 4px; display: block;
+    }
+    @media (max-width: 480px) {
+      #countdown { gap: 8px; margin-top: 40px; }
+      .cd-box { padding: 14px 8px; }
+      .cd-num { font-size: 1.7rem; }
+      .cd-lbl { font-size: .5rem; letter-spacing: 1px; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 4 – INTERACTIVE CAKE
+    ══════════════════════════════════════════════════════ */
+    #cake-section {
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 50% 100%, #1a1a3e 0%, var(--dark) 70%);
+      text-align: center;
+    }
+    #cake-section .section-sub { margin-bottom: 16px; }
+    #cake-msg {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      color: rgba(255,255,255,.5);
+      margin-bottom: 40px;
+      min-height: 2.5rem;
+      transition: color .4s;
+    }
+    #cake-msg.lit { color: var(--gold); }
+    #cake-msg.done { color: #69F0AE; text-shadow: 0 0 20px #69F0AE; }
+
+    #cake-svg {
+      max-width: 400px;
+      width: 95%;
+      cursor: pointer;
+      user-select: none;
+      filter: drop-shadow(0 24px 48px rgba(240,192,64,.35));
+    }
+    .candle-flame { cursor: pointer; }
+    .candle-flame.out { display: none; }
+
+    /* Realistic flame animations */
+    .fl-glow  { animation: glowPulse .55s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 80%; }
+    .fl-outer { animation: outerFlick .4s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+    .fl-mid   { animation: midFlick .35s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+    .fl-core  { animation: coreFlick .3s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 100%; }
+    @keyframes glowPulse  { from { opacity:.5; } to { opacity:.95; } }
+    @keyframes outerFlick { from { transform: scaleX(1)   scaleY(1)    rotate(-2deg); } to { transform: scaleX(.85) scaleY(1.1)  rotate(2deg); } }
+    @keyframes midFlick   { from { transform: scaleX(1)   scaleY(1);   } to { transform: scaleX(1.12) scaleY(.92) rotate(-1deg); } }
+    @keyframes coreFlick  { from { transform: scaleX(1)   scaleY(1);   } to { transform: scaleX(.9)  scaleY(1.1); } }
+
+    .smoke { animation: smokeDrift 1.4s ease-out forwards; transform-box: fill-box; transform-origin: 50% 100%; }
+    @keyframes smokeDrift {
+      0%   { opacity:.7; transform: translateY(0)   scale(1)   skewX(0deg); }
+      50%  { opacity:.4; transform: translateY(-18px) scale(1.4) skewX(6deg); }
+      100% { opacity:0;  transform: translateY(-40px) scale(2.2) skewX(-4deg); }
+    }
+
+    #blow-btn {
+      margin-top: 28px;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      border: none; border-radius: 50px;
+      padding: 14px 40px;
+      color: #fff;
+      font-family: 'Dela Gothic One', cursive;
+      font-size: 1.3rem; letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(226,54,54,.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    #blow-btn:hover { transform: scale(1.06); box-shadow: 0 12px 40px rgba(226,54,54,.6); }
+    #blow-btn:active { transform: scale(.97); }
+
+    /* confetti canvas */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      display: none;
+    }
+
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 6 – FOOTER / RSVP
+    ══════════════════════════════════════════════════════ */
+    #footer {
+      padding: 60px 24px 40px;
+      background: var(--darker);
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    #footer .footer-title {
+      font-family: 'Dela Gothic One', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    #footer p { color: rgba(255,255,255,.45); font-size: .85rem; margin-bottom: 6px; }
+    .rsvp-note {
+      margin-top: 32px;
+      background: rgba(240,192,64,.07);
+      border: 1px solid rgba(240,192,64,.2);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: inline-block;
+      font-size: .9rem;
+      color: rgba(255,255,255,.7);
+      max-width: 460px;
+    }
+    .rsvp-note strong { color: var(--gold); }
+    .footer-copy {
+      margin-top: 48px;
+      font-size: .7rem;
+      color: rgba(255,255,255,.15);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SCROLLBAR
+    ══════════════════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--darker); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ══════════════════════════════════════════════════════
+       RESPONSIVE TWEAKS
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      .heroes-float .hcard { width: 60px; height: 60px; font-size: 1.8rem; }
+      .detail-card { padding: 28px 18px; }
+      .location-info { padding: 20px; }
+    }
+
+    /* progress bar top */
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      z-index: 1000;
+      transition: width .1s linear;
+      box-shadow: 0 0 8px var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- Stars canvas -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- Confetti canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 – HERO
+════════════════════════════════════════════ -->
+<section id="hero">
+
+  <!-- Video background: mobile = portrait 304x540, desktop = landscape 960x540 -->
+  <video id="hero-video" autoplay muted loop playsinline preload="auto">
+    <source media="(max-width: 768px)" src="https://motionbgs.com/media/7245/spider-man-marvel-rivals.304x540.mp4" type="video/mp4" />
+    <source src="https://motionbgs.com/media/7245/spider-man-marvel-rivals.960x540.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Cinematic overlay -->
+  <div class="hero-overlay"></div>
+
+  <div class="lightning"></div>
+
+  <!-- Top tag -->
+  <div class="hero-tag">
+    <span class="tag-dot"></span>
+    Marvel Avengers Party
+    <span class="tag-dot"></span>
+  </div>
+
+  <!-- Main title -->
+  <h2 class="hero-title">
+    <span class="line-soft">Ο μικρός μας ήρωας</span>
+    <span class="name">ΙΩΑΝΝΗΣ</span><br>
+    <span class="line-party">Σε καλεί στο Πάρτι του!</span>
+  </h2>
+
+  <!-- Decorative divider -->
+  <div class="hero-divider"></div>
+
+  <!-- Event info chips -->
+  <div class="hero-chips">
+    <div class="hero-chip chip-date">
+      <span class="chip-icon">⚡</span>
+      20 Απριλίου 2026
+    </div>
+    <div class="hero-chip chip-loc">
+      <span class="chip-icon">📍</span>
+      Yuppi Playground · Κατερίνη
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 – HEROES
+════════════════════════════════════════════ -->
+<section id="heroes-section">
+  <h2 class="section-title">ΟΙ ΗΡΩΕΣ ΤΗΣ ΠΑΡΕΑΣ</h2>
+  <p class="section-sub">Όλοι μαζί για τον Ιωάννη!</p>
+
+  <div class="heroes-grid">
+
+    <!-- ── IRON MAN ── -->
+    <div class="hero-card" id="h-ironman" style="--pw:95%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://assets.stickpng.com/images/58569c7a4f6ae202fedf2751.png" alt="Iron Man" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Iron Man</h3>
+          <p>Ο Τόνι Σταρκ – ο ευφυέστερος νους<br>του σύμπαντος φοράει την πανοπλία του!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HULK ── -->
+    <div class="hero-card" id="h-hulk" style="--pw:100%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://pngimg.com/uploads/hulk/hulk_PNG121.png" alt="Hulk" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Hulk</h3>
+          <p>Ο Μεγαλύτερος – HULK SMASH!<br>Όσο πιο θυμωμένος, τόσο πιο δυνατός!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── THOR ── -->
+    <div class="hero-card" id="h-thor" style="--pw:92%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://assets.stickpng.com/images/580b57fbd9996e24bc43c072.png" alt="Thor" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Thor</h3>
+          <p>Ο Θεός της Αστραπής από την Άσγκαρντ<br>σφίγγει τη Μιόλνιρ και είναι έτοιμος!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SPIDER-MAN ── -->
+    <div class="hero-card" id="h-spider" style="--pw:88%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://assets.stickpng.com/images/580b57fbd9996e24bc43c05c.png" alt="Spider-Man" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Spider-Man</h3>
+          <p>Ο Νεαρός Ήρωας – με μεγάλη δύναμη<br>έρχεται μεγάλη ευθύνη… και πάρτι!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CAPTAIN AMERICA ── -->
+    <div class="hero-card" id="h-cap" style="--pw:90%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://assets.stickpng.com/images/58728288f3a71010b5e8ef12.png" alt="Captain America" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Captain America</h3>
+          <p>Ο Αμερικανός Πολεμιστής – η ασπίδα<br>του προστατεύει όλους τους ήρωες!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BLACK PANTHER ── -->
+    <div class="hero-card" id="h-thor2" style="--pw:85%">
+      <div class="card-inner">
+        <div class="icon">
+          <img src="https://assets.stickpng.com/images/580b57fbd9996e24bc43c07a.png" alt="Black Panther" loading="lazy"/>
+        </div>
+        <div class="card-text">
+          <h3>Black Panther</h3>
+          <p>Ο Βασιλιάς της Ουακάντα – γρήγορος,<br>δυνατός και αήττητος μαχητής!</p>
+          <div class="power-bar"><div class="power-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 – DETAILS
+════════════════════════════════════════════ -->
+<section id="details">
+  <h2 class="section-title">ΛΕΠΤΟΜΕΡΕΙΕΣ ΑΠΟΣΤΟΛΗΣ</h2>
+  <p class="section-sub">Ο Ιωάννης χρειάζεται την παρουσία σου!</p>
+
+  <div class="mission-cards">
+
+    <!-- DATE CARD -->
+    <div class="mission-card mc-date">
+      <span class="mc-bg-dec">20</span>
+      <div class="mc-content">
+        <span class="mc-label">Ημερομηνία</span>
+        <span class="mc-day-name">Κυριακή</span>
+        <span class="mc-date-num">20</span>
+        <span class="mc-month">Απριλίου 2026</span>
+        <div class="mc-divider"></div>
+        <span class="mc-sub">Μην αργήσεις!</span>
+      </div>
+    </div>
+
+    <!-- LOCATION CARD -->
+    <div class="mission-card mc-loc">
+      <span class="mc-bg-dec">YP</span>
+      <div class="mc-content">
+        <span class="mc-label">Τοποθεσία</span>
+        <div class="mc-loc-pin"></div>
+        <span class="mc-venue">Yuppi Playground</span>
+        <span class="mc-city">Κατερίνη</span>
+        <div class="mc-divider"></div>
+        <span class="mc-sub">Ώρα διασκέδασης!</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Countdown -->
+  <div id="countdown">
+    <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Μέρες</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Ώρες</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Λεπτά</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Δευτ/πτα</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 – CAKE
+════════════════════════════════════════════ -->
+<section id="cake-section">
+  <h2 class="section-title">ΣΒΗΣΕ ΤΑ ΚΕΡΑΚΙΑ!</h2>
+  <p class="section-sub">Πάτα πάνω στη φλόγα για να σβήσεις</p>
+
+  <p id="cake-msg">🎂 Πάτα σε κάθε κερί για να το σβήσεις!</p>
+
+  <svg id="cake-svg" viewBox="0 0 380 360" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="plateG" cx="50%" cy="35%" r="55%">
+        <stop offset="0%" stop-color="#f2f2f2"/><stop offset="100%" stop-color="#aaaaaa"/>
+      </radialGradient>
+      <!-- Tier gradients (3D cylinder: dark edges, light center) -->
+      <linearGradient id="t1g" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#5A0000"/><stop offset="18%" stop-color="#C62828"/>
+        <stop offset="50%"  stop-color="#EF5350"/><stop offset="82%" stop-color="#C62828"/>
+        <stop offset="100%" stop-color="#5A0000"/>
+      </linearGradient>
+      <linearGradient id="t2g" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#0A2060"/><stop offset="18%" stop-color="#1565C0"/>
+        <stop offset="50%"  stop-color="#2196F3"/><stop offset="82%" stop-color="#1565C0"/>
+        <stop offset="100%" stop-color="#0A2060"/>
+      </linearGradient>
+      <linearGradient id="t3g" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#35006A"/><stop offset="18%" stop-color="#7B1FA2"/>
+        <stop offset="50%"  stop-color="#BA68C8"/><stop offset="82%" stop-color="#7B1FA2"/>
+        <stop offset="100%" stop-color="#35006A"/>
+      </linearGradient>
+      <!-- Frosting: creamy white -->
+      <radialGradient id="frg" cx="50%" cy="38%" r="58%">
+        <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EDE0D4"/>
+      </radialGradient>
+      <!-- Candle gradients: dark L, highlight C-R, dark R -->
+      <linearGradient id="cg0" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#880E4F"/><stop offset="38%" stop-color="#E91E63"/>
+        <stop offset="68%" stop-color="#F8BBD0"/><stop offset="100%" stop-color="#880E4F"/>
+      </linearGradient>
+      <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#004D40"/><stop offset="38%" stop-color="#00897B"/>
+        <stop offset="68%" stop-color="#80CBC4"/><stop offset="100%" stop-color="#004D40"/>
+      </linearGradient>
+      <linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#BF360C"/><stop offset="38%" stop-color="#F4511E"/>
+        <stop offset="68%" stop-color="#FFCCBC"/><stop offset="100%" stop-color="#BF360C"/>
+      </linearGradient>
+      <linearGradient id="cg3" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#1A237E"/><stop offset="38%" stop-color="#3949AB"/>
+        <stop offset="68%" stop-color="#9FA8DA"/><stop offset="100%" stop-color="#1A237E"/>
+      </linearGradient>
+      <!-- Flame glow radial -->
+      <radialGradient id="fgr" cx="50%" cy="68%" r="50%">
+        <stop offset="0%"   stop-color="#FFF9C4" stop-opacity=".95"/>
+        <stop offset="28%"  stop-color="#FFC107" stop-opacity=".82"/>
+        <stop offset="62%"  stop-color="#FF6D00" stop-opacity=".42"/>
+        <stop offset="100%" stop-color="#FF1744" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Drop shadow -->
+    <ellipse cx="190" cy="350" rx="158" ry="8" fill="black" opacity=".22"/>
+    <!-- Plate -->
+    <ellipse cx="190" cy="335" rx="168" ry="18" fill="url(#plateG)"/>
+    <ellipse cx="190" cy="332" rx="150" ry="10" fill="white" opacity=".12"/>
+
+    <!-- ══ TIER 1 — BASE (red) ══ -->
+    <!-- Back-bottom shadow (drawn before body so body overlaps it) -->
+    <ellipse cx="190" cy="304" rx="152" ry="15" fill="#3A0000"/>
+    <!-- Body -->
+    <rect x="38" y="232" width="304" height="72" fill="url(#t1g)"/>
+    <!-- Subtle top-highlight band -->
+    <rect x="38" y="232" width="304" height="16" fill="white" opacity=".055"/>
+    <!-- Top frosting -->
+    <ellipse cx="190" cy="232" rx="152" ry="15" fill="url(#frg)"/>
+    <ellipse cx="175" cy="230" rx="92"  ry="6"  fill="white" opacity=".2"/>
+    <!-- Front-bottom rim (in front of body) -->
+    <ellipse cx="190" cy="304" rx="152" ry="15" fill="#6B0000" opacity=".55"/>
+    <!-- Drips (teardrop shapes hanging from frosting edge) -->
+    <path d="M 72,232 Q 69,248 72,264 Q 75,248 78,232 Z" fill="white" opacity=".87"/>
+    <path d="M 104,232 Q 101,252 104,272 Q 107,252 110,232 Z" fill="white" opacity=".9"/>
+    <path d="M 138,232 Q 135,256 138,276 Q 141,256 144,232 Z" fill="white" opacity=".88"/>
+    <path d="M 170,232 Q 167,252 170,268 Q 173,252 176,232 Z" fill="white" opacity=".9"/>
+    <path d="M 202,232 Q 199,255 202,274 Q 205,255 208,232 Z" fill="white" opacity=".88"/>
+    <path d="M 232,232 Q 229,251 232,267 Q 235,251 238,232 Z" fill="white" opacity=".9"/>
+    <path d="M 262,232 Q 259,254 262,273 Q 265,254 268,232 Z" fill="white" opacity=".88"/>
+    <path d="M 290,232 Q 287,250 290,266 Q 293,250 296,232 Z" fill="white" opacity=".87"/>
+    <path d="M 316,232 Q 313,246 316,258 Q 319,246 322,232 Z" fill="white" opacity=".85"/>
+    <!-- Gold star decor -->
+    <circle cx="72"  cy="266" r="4"   fill="#FFC107" opacity=".85"/>
+    <circle cx="108" cy="280" r="3"   fill="#FFC107" opacity=".72"/>
+    <circle cx="148" cy="264" r="5"   fill="#FFC107" opacity=".9"/>
+    <circle cx="190" cy="278" r="3.5" fill="#FFC107" opacity=".8"/>
+    <circle cx="232" cy="263" r="5"   fill="#FFC107" opacity=".9"/>
+    <circle cx="272" cy="279" r="3"   fill="#FFC107" opacity=".72"/>
+    <circle cx="308" cy="267" r="4"   fill="#FFC107" opacity=".85"/>
+    <text x="190" y="298" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="22" fill="white" fill-opacity=".9" letter-spacing="4">ΙΩΑΝΝΗΣ</text>
+
+    <!-- ══ TIER 2 — MIDDLE (blue) ══ -->
+    <ellipse cx="190" cy="236" rx="114" ry="13" fill="#082060" opacity=".8"/>
+    <rect x="76" y="170" width="228" height="62" fill="url(#t2g)"/>
+    <rect x="76" y="170" width="228" height="14" fill="white" opacity=".055"/>
+    <ellipse cx="190" cy="170" rx="114" ry="13" fill="url(#frg)"/>
+    <ellipse cx="176" cy="168" rx="70"  ry="6"  fill="white" opacity=".18"/>
+    <ellipse cx="190" cy="232" rx="114" ry="13" fill="#082060" opacity=".5"/>
+    <!-- Drips -->
+    <path d="M 98,170 Q 95,188 98,206 Q 101,188 104,170 Z" fill="white" opacity=".88"/>
+    <path d="M 126,170 Q 123,192 126,210 Q 129,192 132,170 Z" fill="white" opacity=".9"/>
+    <path d="M 156,170 Q 153,195 156,214 Q 159,195 162,170 Z" fill="white" opacity=".88"/>
+    <path d="M 186,170 Q 183,193 186,212 Q 189,193 192,170 Z" fill="white" opacity=".9"/>
+    <path d="M 216,170 Q 213,194 216,213 Q 219,194 222,170 Z" fill="white" opacity=".88"/>
+    <path d="M 246,170 Q 243,191 246,208 Q 249,191 252,170 Z" fill="white" opacity=".9"/>
+    <path d="M 274,170 Q 271,188 274,204 Q 277,188 280,170 Z" fill="white" opacity=".87"/>
+    <!-- Dots -->
+    <circle cx="100" cy="196" r="3"   fill="white" opacity=".5"/>
+    <circle cx="134" cy="210" r="2.5" fill="white" opacity=".45"/>
+    <circle cx="168" cy="195" r="3.5" fill="white" opacity=".58"/>
+    <circle cx="190" cy="208" r="2.5" fill="white" opacity=".48"/>
+    <circle cx="212" cy="194" r="3.5" fill="white" opacity=".58"/>
+    <circle cx="246" cy="209" r="2.5" fill="white" opacity=".45"/>
+    <circle cx="278" cy="197" r="3"   fill="white" opacity=".5"/>
+    <text x="190" y="224" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="18" fill="white" fill-opacity=".85" letter-spacing="2">AVENGERS</text>
+
+    <!-- ══ TIER 3 — TOP (purple) ══ -->
+    <ellipse cx="190" cy="174" rx="76" ry="11" fill="#2E0058" opacity=".8"/>
+    <rect x="114" y="112" width="152" height="62" fill="url(#t3g)"/>
+    <rect x="114" y="112" width="152" height="12" fill="white" opacity=".055"/>
+    <ellipse cx="190" cy="112" rx="76" ry="11" fill="url(#frg)"/>
+    <ellipse cx="178" cy="110" rx="46" ry="5"  fill="white" opacity=".18"/>
+    <ellipse cx="190" cy="174" rx="76" ry="11" fill="#2E0058" opacity=".5"/>
+    <!-- Drips -->
+    <path d="M 128,112 Q 125,130 128,148 Q 131,130 134,112 Z" fill="white" opacity=".88"/>
+    <path d="M 152,112 Q 149,133 152,152 Q 155,133 158,112 Z" fill="white" opacity=".9"/>
+    <path d="M 177,112 Q 174,134 177,154 Q 180,134 183,112 Z" fill="white" opacity=".88"/>
+    <path d="M 203,112 Q 200,133 203,152 Q 206,133 209,112 Z" fill="white" opacity=".9"/>
+    <path d="M 228,112 Q 225,131 228,150 Q 231,131 234,112 Z" fill="white" opacity=".88"/>
+    <path d="M 250,112 Q 247,128 250,144 Q 253,128 256,112 Z" fill="white" opacity=".86"/>
+    <!-- Decor -->
+    <circle cx="128" cy="140" r="2.5" fill="#FFC107" opacity=".8"/>
+    <circle cx="252" cy="145" r="2.5" fill="#FFC107" opacity=".8"/>
+    <text x="190" y="156" text-anchor="middle" font-family="Dela Gothic One,cursive" font-size="13.5" fill="white" fill-opacity=".88" letter-spacing="1">ΧΡΟΝΙΑ ΠΟΛΛΑ</text>
+
+    <!-- ══ CANDLES (4) — staggered heights, x=157,177,203,223 ══ -->
+
+    <!-- ─ CANDLE 0 (rose) x=157, h=46 ─ -->
+    <g class="candle-group">
+      <rect x="151" y="66" width="12" height="46" rx="3.5" fill="url(#cg0)"/>
+      <rect x="154" y="68" width="3"  height="42" rx="1.5" fill="white" opacity=".22"/>
+      <path d="M 154,66 Q 151,57 152,67 Q 155,61 157,67 Q 158,57 157,66" fill="white" opacity=".32"/>
+      <rect x="150" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
+      <rect x="150" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
+      <line x1="157" y1="66" x2="157" y2="59" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="157" cy="59" r="1.5" fill="#3E2723"/>
+      <g class="candle-flame" id="flame-0" onclick="blowCandle(0)">
+        <ellipse class="fl-glow"  cx="157" cy="45" rx="16" ry="22" fill="url(#fgr)"/>
+        <ellipse class="fl-outer" cx="157" cy="47" rx="6"  ry="15" fill="#FFC107" opacity=".93"/>
+        <ellipse class="fl-mid"   cx="157" cy="49" rx="4"  ry="11" fill="#FF5722" opacity=".9"/>
+        <ellipse class="fl-core"  cx="157" cy="52" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95"/>
+        <circle  cx="157" cy="58" r="2" fill="white" opacity=".9"/>
+      </g>
+    </g>
+
+    <!-- ─ CANDLE 1 (teal) x=177, h=52 ─ -->
+    <g class="candle-group">
+      <rect x="171" y="60" width="12" height="52" rx="3.5" fill="url(#cg1)"/>
+      <rect x="174" y="62" width="3"  height="48" rx="1.5" fill="white" opacity=".22"/>
+      <path d="M 174,60 Q 171,51 172,61 Q 175,55 177,61 Q 178,51 177,60" fill="white" opacity=".3"/>
+      <rect x="170" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
+      <rect x="170" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
+      <line x1="177" y1="60" x2="177" y2="53" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="177" cy="53" r="1.5" fill="#3E2723"/>
+      <g class="candle-flame" id="flame-1" onclick="blowCandle(1)">
+        <ellipse class="fl-glow"  cx="177" cy="39" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.14s"/>
+        <ellipse class="fl-outer" cx="177" cy="41" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.12s"/>
+        <ellipse class="fl-mid"   cx="177" cy="43" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.1s"/>
+        <ellipse class="fl-core"  cx="177" cy="46" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.08s"/>
+        <circle  cx="177" cy="52" r="2" fill="white" opacity=".9"/>
+      </g>
+    </g>
+
+    <!-- ─ CANDLE 2 (orange) x=203, h=50 ─ -->
+    <g class="candle-group">
+      <rect x="197" y="62" width="12" height="50" rx="3.5" fill="url(#cg2)"/>
+      <rect x="200" y="64" width="3"  height="46" rx="1.5" fill="white" opacity=".24"/>
+      <path d="M 200,62 Q 197,53 198,63 Q 201,57 203,63 Q 204,53 203,62" fill="white" opacity=".34"/>
+      <rect x="196" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
+      <rect x="196" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
+      <line x1="203" y1="62" x2="203" y2="55" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="203" cy="55" r="1.5" fill="#3E2723"/>
+      <g class="candle-flame" id="flame-2" onclick="blowCandle(2)">
+        <ellipse class="fl-glow"  cx="203" cy="41" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.26s"/>
+        <ellipse class="fl-outer" cx="203" cy="43" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.24s"/>
+        <ellipse class="fl-mid"   cx="203" cy="45" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.22s"/>
+        <ellipse class="fl-core"  cx="203" cy="48" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.2s"/>
+        <circle  cx="203" cy="54" r="2" fill="white" opacity=".9"/>
+      </g>
+    </g>
+
+    <!-- ─ CANDLE 3 (indigo) x=223, h=44 ─ -->
+    <g class="candle-group">
+      <rect x="217" y="68" width="12" height="44" rx="3.5" fill="url(#cg3)"/>
+      <rect x="220" y="70" width="3"  height="40" rx="1.5" fill="white" opacity=".22"/>
+      <path d="M 220,68 Q 217,59 218,69 Q 221,63 223,69 Q 224,59 223,68" fill="white" opacity=".3"/>
+      <rect x="216" y="107" width="14" height="6" rx="2" fill="#CFB53B"/>
+      <rect x="216" y="107" width="14" height="2" rx="1" fill="#FFD700" opacity=".5"/>
+      <line x1="223" y1="68" x2="223" y2="61" stroke="#3E2723" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="223" cy="61" r="1.5" fill="#3E2723"/>
+      <g class="candle-flame" id="flame-3" onclick="blowCandle(3)">
+        <ellipse class="fl-glow"  cx="223" cy="47" rx="16" ry="22" fill="url(#fgr)" style="animation-delay:-.38s"/>
+        <ellipse class="fl-outer" cx="223" cy="49" rx="6"  ry="15" fill="#FFC107" opacity=".93" style="animation-delay:-.36s"/>
+        <ellipse class="fl-mid"   cx="223" cy="51" rx="4"  ry="11" fill="#FF5722" opacity=".9"  style="animation-delay:-.34s"/>
+        <ellipse class="fl-core"  cx="223" cy="54" rx="2"  ry="7"  fill="#FFFDE7" opacity=".95" style="animation-delay:-.32s"/>
+        <circle  cx="223" cy="60" r="2" fill="white" opacity=".9"/>
+      </g>
+    </g>
+
+  </svg>
+
+  <br/>
+  <button id="blow-btn" onclick="blowAll()">💨 Σβήσε Όλα!</button>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 – LOCATION
+════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 – FOOTER
+════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-title">ΣΕ ΠΕΡΙΜΕΝΟΥΜΕ, ΗΡΩΑ!</div>
+  <p>Πάρτι γενεθλίων για τον Ιωάννη 🦸</p>
+  <p>20 Απριλίου 2026 · Yuppi Playground · Κατερίνη</p>
+
+  <div class="rsvp-note">
+    <strong>RSVP:</strong> Παρακαλούμε επιβεβαίωσε<br>την παρουσία σου έγκαιρα!<br>
+    <strong>«Μαζί είμαστε Avengers!»</strong>
+  </div>
+
+  <p class="footer-copy">© 2026 · Avengers Birthday Mission · Ioannis Assemble!</p>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ── STARS CANVAS ──────────────────────────────────────── */
+(function() {
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    c.width  = window.innerWidth;
+    c.height = window.innerHeight;
+    stars = Array.from({ length: 180 }, () => ({
+      x: Math.random() * c.width,
+      y: Math.random() * c.height,
+      r: Math.random() * 1.5 + .3,
+      a: Math.random(),
+      spd: Math.random() * .006 + .002,
+      dir: Math.random() > .5 ? 1 : -1
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    stars.forEach(s => {
+      s.a += s.spd * s.dir;
+      if (s.a > 1 || s.a < 0) s.dir *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+})();
+
+/* ── SCROLL PROGRESS BAR ──────────────────────────────── */
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+/* ── SCROLL REVEAL ────────────────────────────────────── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.hero-card, .mission-card').forEach(el => {
+  observer.observe(el);
+});
+
+/* Stagger hero cards */
+document.querySelectorAll('.hero-card').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.12) + 's';
+});
+document.querySelectorAll('.detail-card').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.15) + 's';
+});
+
+/* ── COUNTDOWN ────────────────────────────────────────── */
+function tick() {
+  const target = new Date('2026-04-20T00:00:00').getTime();
+  const now    = Date.now();
+  const diff   = target - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-d').textContent = '🎉';
+    document.getElementById('cd-h').textContent = '🎉';
+    document.getElementById('cd-m').textContent = '🎉';
+    document.getElementById('cd-s').textContent = '🎉';
+    return;
+  }
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000)  / 60000);
+  const s = Math.floor((diff % 60000)    / 1000);
+
+  document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+tick();
+setInterval(tick, 1000);
+
+/* ── CAKE / CANDLES ──────────────────────────────────── */
+let blown = 0;
+const total = 4;
+
+function blowCandle(id) {
+  const flame = document.getElementById('flame-' + id);
+  if (!flame || flame.classList.contains('out')) return;
+  flame.classList.add('out');
+  blown++;
+  updateCakeMsg();
+  if (blown === total) allBlown();
+}
+
+function blowAll() {
+  for (let i = 0; i < total; i++) {
+    setTimeout(() => blowCandle(i), i * 120);
+  }
+}
+
+function updateCakeMsg() {
+  const msg = document.getElementById('cake-msg');
+  if (blown === 0) {
+    msg.textContent = '🎂 Πάτα σε κάθε κερί για να το σβήσεις!';
+    msg.className = '';
+  } else if (blown < total) {
+    msg.textContent = `🌬️ Μπράβο! ${blown}/${total} κεριά σβηστά...`;
+    msg.className = 'lit';
+  }
+}
+
+function allBlown() {
+  const msg = document.getElementById('cake-msg');
+  msg.textContent = '🎉 ΧΡΟΝΙΑ ΠΟΛΛΑ ΙΩΑΝΝΗ! 🎉';
+  msg.className = 'done';
+  launchConfetti();
+  document.getElementById('blow-btn').textContent = '🎊 Χρόνια Πολλά!';
+  document.getElementById('blow-btn').disabled = true;
+}
+
+/* ── CONFETTI ─────────────────────────────────────────── */
+function launchConfetti() {
+  const cv = document.getElementById('confetti-canvas');
+  cv.style.display = 'block';
+  cv.width  = window.innerWidth;
+  cv.height = window.innerHeight;
+  const ctx = cv.getContext('2d');
+
+  const pieces = Array.from({ length: 140 }, () => ({
+    x: Math.random() * cv.width,
+    y: Math.random() * -200,
+    w: Math.random() * 12 + 6,
+    h: Math.random() * 6 + 3,
+    color: ['#E23636','#F0C040','#4CAF50','#2196F3','#9C27B0','#FF5722','#fff'][Math.floor(Math.random()*7)],
+    rot: Math.random() * 360,
+    rotSpd: (Math.random() - .5) * 8,
+    vy: Math.random() * 4 + 2,
+    vx: (Math.random() - .5) * 3
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    pieces.forEach(p => {
+      p.y  += p.vy;
+      p.x  += p.vx;
+      p.rot += p.rotSpd;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 220) requestAnimationFrame(draw);
+    else { ctx.clearRect(0,0,cv.width,cv.height); cv.style.display='none'; }
+  }
+  draw();
+}
+
+/* ── HERO CARD TILT ───────────────────────────────────── */
+document.querySelectorAll('.hero-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - .5;
+    const y = (e.clientY - r.top)  / r.height - .5;
+    card.style.transform =
+      `perspective(700px) rotateY(${x*10}deg) rotateX(${-y*10}deg) scale(1.03)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+</script>
+
+</body>
+</html>
