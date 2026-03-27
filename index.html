@@ -657,12 +657,13 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       SECTION 4 – INTERACTIVE CAKE
+       SECTION 6 – FOOTER / RSVP  (cake section removed)
     ══════════════════════════════════════════════════════ */
     #cake-section {
-      padding: 80px 24px;
+      padding: 60px 24px 40px;
       background: radial-gradient(ellipse at 50% 100%, #1a1a3e 0%, var(--dark) 70%);
       text-align: center;
+      overflow: visible;
     }
     #cake-section .section-sub { margin-bottom: 16px; }
     #cake-msg {
@@ -672,275 +673,255 @@
       margin-bottom: 40px;
       min-height: 2.5rem;
       transition: color .4s;
+      text-align: center;
     }
     #cake-msg.lit { color: var(--gold); }
     #cake-msg.done { color: #69F0AE; text-shadow: 0 0 20px #69F0AE; }
 
-    /* ── CSS BIRTHDAY CAKE ─────────────────────────── */
-    .css-cake {
-      width: 300px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,.55));
+    /* ── CODEPEN BIRTHDAY CAKE (exact, 4 candles) ─── */
+    .cake-container {
+      position: relative;
+      height: 380px;
+      width: calc(100% + 48px);
+      margin-left: -24px;
+      overflow: hidden;
+    }
+
+    #birthday-cake {
+      position: absolute;
+      top: 210px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
       user-select: none;
     }
 
-    /* ─ CANDLES ─ */
-    .cake-candles {
-      display: flex;
-      gap: 20px;
-      align-items: flex-end;
-      position: relative;
-      z-index: 4;
-      padding: 0 30px;
-      margin-bottom: -2px;
+    /* Scale down on narrow screens — scale the container so layout stays intact */
+    @media (max-width: 460px) {
+      .cake-container { transform: scale(.8); transform-origin: top center; margin-bottom: -76px; }
     }
-    .c-candle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-    .c-candle:nth-child(2) { margin-bottom: 14px; }
-    .c-candle:nth-child(3) { margin-bottom: 6px; }
-
-    /* flame wrapper */
-    .c-flame-wrap {
-      display: flex; flex-direction: column; align-items: center;
-      position: relative;
-      transition: opacity .25s, transform .25s;
-    }
-    .c-flame-wrap.out {
-      opacity: 0; transform: scale(0); pointer-events: none;
+    @media (max-width: 370px) {
+      .cake-container { transform: scale(.65); transform-origin: top center; margin-bottom: -133px; }
     }
 
-    /* glow halo */
-    .c-glow {
-      width: 34px; height: 20px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(255,195,0,.6), transparent 70%);
-      margin-bottom: -5px;
-      animation: cGL .7s ease-in-out infinite alternate;
-    }
-    @keyframes cGL { from{opacity:.35} to{opacity:.9} }
-
-    /* flame shape */
-    .c-flame {
-      width: 14px; height: 26px;
-      position: relative;
-    }
-    .c-flame::before { /* outer */
-      content: '';
+    #birthday-cake:before {
+      content: "";
       position: absolute;
-      bottom: 0; left: 50%;
-      width: 13px; height: 24px;
-      transform: translateX(-50%);
-      background: linear-gradient(to top, #E65100, #FF8F00, #FFD54F, #FFFDE7 92%);
-      border-radius: 50% 50% 22% 22% / 58% 58% 38% 38%;
-      animation: cFO .45s ease-in-out infinite alternate;
-      transform-origin: bottom center;
+      background-color: #ede0d4;
+      width: 400px;
+      height: 140px;
+      border-radius: 50%;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -10%);
+      box-shadow: inset -2px -5px #e6ccb2;
     }
-    .c-flame::after { /* inner core */
-      content: '';
+
+    .cake {
       position: absolute;
-      bottom: 2px; left: 50%;
-      width: 6px; height: 14px;
-      transform: translateX(-50%);
-      background: linear-gradient(to top, #FF5722, #FFEB3B, #fff);
-      border-radius: 50% 50% 22% 22% / 58% 58% 38% 38%;
-      animation: cFI .35s ease-in-out infinite alternate-reverse;
-      transform-origin: bottom center;
-    }
-    @keyframes cFO {
-      from { transform: translateX(-50%) scaleX(1) rotate(-2deg); }
-      to   { transform: translateX(-50%) scaleX(.8) scaleY(1.09) rotate(3deg); }
-    }
-    @keyframes cFI {
-      from { transform: translateX(-50%) scaleY(1); }
-      to   { transform: translateX(-50%) scaleY(.86) scaleX(1.12); }
-    }
-    /* stagger per candle */
-    .c-candle:nth-child(2) .c-flame::before { animation-delay: -.13s; }
-    .c-candle:nth-child(3) .c-flame::before { animation-delay: -.27s; }
-    .c-candle:nth-child(4) .c-flame::before { animation-delay: -.41s; }
-
-    .c-wick {
-      width: 2px; height: 7px;
-      background: #4E342E;
-      border-radius: 1px;
-      margin-top: 0;
+      background-color: #ddb892;
+      width: 350px;
+      height: 130px;
+      left: 50%;
+      transform: translate(-50%, -60%);
     }
 
-    .c-body {
-      width: 15px;
-      border-radius: 3px 3px 0 0;
-      position: relative; overflow: hidden;
-      box-shadow: inset -3px 0 8px rgba(0,0,0,.35);
-    }
-    .c-body::after { /* shine strip */
-      content: '';
-      position: absolute; top: 0; left: 3px;
-      width: 4px; height: 100%;
-      background: rgba(255,255,255,.28);
-      border-radius: 2px;
-    }
-    .c-ring {
-      width: 21px; height: 5px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #FFD700, #B8860B);
-      box-shadow: 0 2px 4px rgba(0,0,0,.3);
+    .cake:before, .cake:after { content: ""; position: absolute; }
+
+    .cake:before, .middle, .middle:before {
+      border-radius: 50% 50% 50% 50% / 0% 0% 100% 100%;
+      width: 350px;
+      height: 50px;
     }
 
-    /* candle colors + staggered heights */
-    .c-candle:nth-child(1) .c-body { height:46px; background:linear-gradient(to right,#880E4F,#E91E63,#F8BBD0,#E91E63,#880E4F); }
-    .c-candle:nth-child(2) .c-body { height:60px; background:linear-gradient(to right,#004D40,#00897B,#80CBC4,#00897B,#004D40); }
-    .c-candle:nth-child(3) .c-body { height:52px; background:linear-gradient(to right,#BF360C,#F4511E,#FFCCBC,#F4511E,#BF360C); }
-    .c-candle:nth-child(4) .c-body { height:44px; background:linear-gradient(to right,#1A237E,#3949AB,#9FA8DA,#3949AB,#1A237E); }
-
-    /* ─ CAKE TIERS ─ */
-    .cake-tiers {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 3;
+    .cake:before {
+      background-color: #ddb892;
+      top: 130px;
     }
 
-    .cake-t {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
+    .cake:after {
+      background-color: #b08968;
+      width: 350px;
+      height: 30px;
+      top: 50px;
     }
 
-    /* ── Frosting lid ───────────────────────────────── */
-    .t-lid {
-      width: 100%;
-      height: 22px;
-      background: radial-gradient(ellipse 80% 65% at 38% 35%,
-        #ffffff 0%, #f5ece0 55%, #ddd0bc 100%);
-      border-radius: 50%;
-      position: relative;
-      z-index: 3;
-      box-shadow:
-        0 5px 12px rgba(0,0,0,.35),
-        inset 0 2px 4px rgba(255,255,255,.6);
-    }
-    /* Frosting drips — scalloped bottom edge */
-    .t-lid::after {
-      content: '';
+    .middle {
       position: absolute;
-      bottom: -9px; left: 4%; right: 4%;
-      height: 16px;
-      background:
-        radial-gradient(circle at 50% 0%, #f5ece0 55%, transparent 56%);
-      background-size: 18px 16px;
-      background-repeat: repeat-x;
-      z-index: 0;
+      background-color: #b08968;
+      top: 80px;
+      z-index: 1;
     }
-    /* Frosting shine */
-    .t-lid::before {
-      content: '';
+
+    .middle:before {
+      content: "";
       position: absolute;
-      top: 4px; left: 16%;
-      width: 30%; height: 7px;
-      background: rgba(255,255,255,.65);
-      border-radius: 50%;
+      background-color: #ddb892;
+      top: -35px;
     }
 
-    /* ── Tier body ──────────────────────────────────── */
-    .t-body {
-      width: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: -1px;
-      overflow: hidden;
-    }
-    /* Top highlight band */
-    .t-body::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 30%;
-      background: linear-gradient(to bottom, rgba(255,255,255,.13), transparent);
-      pointer-events: none; z-index: 1;
-    }
-    /* Bottom shadow band */
-    .t-body::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 28%;
-      background: linear-gradient(to top, rgba(0,0,0,.28), transparent);
-      pointer-events: none; z-index: 1;
-    }
-    .t-label {
-      font-family: 'Dela Gothic One', cursive;
-      letter-spacing: 3px;
-      color: rgba(255,255,255,.92);
-      text-shadow: 0 1px 8px rgba(0,0,0,.7);
-      position: relative; z-index: 2;
-    }
-
-    /* ── Bottom rim ─────────────────────────────────── */
-    .t-rim {
-      width: 100%;
-      height: 13px;
+    .top {
+      position: absolute;
+      background-color: #7f5539;
+      width: 350px;
+      height: 90px;
       border-radius: 50%;
-      position: relative;
       z-index: 2;
-      margin-top: -5px;
-      box-shadow: 0 5px 14px rgba(0,0,0,.4);
+      top: -45px;
+      box-shadow: inset -5px -1px #fff, inset -70px 2px rgba(255,255,255,.1);
     }
 
-    /* ── Tier top (purple) ──────────────────────────── */
-    .cake-t-top { width: 155px; }
-    .cake-t-top .t-body {
-      height: 62px;
-      background: linear-gradient(to right,
-        #2E0052 0%, #6A1B9A 22%, #BA68C8 50%, #6A1B9A 78%, #2E0052 100%);
+    .chocs {
+      position: absolute;
+      width: 55px;
+      height: 50px;
+      background-color: #7f5539;
+      top: 0;
+      z-index: 1;
+      border-radius: 50% 50% 50% 50% / 0% 0% 100% 100%;
+      box-shadow: 49px 20px #7f5539, 98px 25px #7f5539, 147px 30px #7f5539,
+        196px 25px #7f5539, 245px 20px #7f5539, 295px 0 #7f5539,
+        0px 4px #fff, 49px 24px #fff, 98px 29px #fff, 147px 34px #fff,
+        196px 29px #fff, 245px 24px #fff, 295px 4px #fff;
     }
-    .cake-t-top .t-rim  { background: radial-gradient(ellipse, #3D0065, #1A0035); }
-    .cake-t-top .t-label { font-size: .72rem; }
 
-    /* ── Tier mid (blue) ────────────────────────────── */
-    .cake-t-mid { width: 222px; margin-top: -5px; }
-    .cake-t-mid .t-body {
-      height: 70px;
-      background: linear-gradient(to right,
-        #081840 0%, #1565C0 22%, #42A5F5 50%, #1565C0 78%, #081840 100%);
+    .chocs:before {
+      content: "";
+      position: absolute;
+      width: 175px;
+      height: 180px;
+      background-color: rgba(255,255,255,.1);
+      border-radius: 100% 0% 100% 0% / 0% 72% 28% 100%;
+      left: 175px;
+      top: 0;
     }
-    .cake-t-mid .t-rim  { background: radial-gradient(ellipse, #0A2060, #030B28); }
-    .cake-t-mid .t-label { font-size: .85rem; }
 
-    /* ── Tier base (red) ────────────────────────────── */
-    .cake-t-base { width: 295px; margin-top: -5px; }
-    .cake-t-base .t-body {
+    /* 4 candles — centered within 400px container */
+    /* C1 at left:110px, then +50, +100, +150 via box-shadow */
+    .candles {
+      position: absolute;
+      width: 30px;
       height: 80px;
-      background: linear-gradient(to right,
-        #4A0000 0%, #C62828 22%, #EF5350 50%, #C62828 78%, #4A0000 100%);
+      background-color: #0081a7;
+      top: -160px;
+      left: 110px;
+      box-shadow: 50px 0 #0081a7, 100px 0 #0081a7, 150px 0 #0081a7;
     }
-    .cake-t-base .t-rim  { background: radial-gradient(ellipse, #3A0000, #180000); }
-    .cake-t-base .t-label { font-size: 1rem; }
 
-    /* ── Plate ──────────────────────────────────────── */
-    .cake-plate {
-      width: 325px; height: 22px;
-      background: radial-gradient(ellipse at 40% 35%,
-        #f0f0f0 0%, #b0b0b0 55%, #606060 100%);
+    .candles:before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 10px;
+      background-color: #0081a7;
       border-radius: 50%;
-      margin-top: -5px;
+      top: -5px;
       box-shadow:
-        0 12px 35px rgba(0,0,0,.65),
-        inset 0 2px 4px rgba(255,255,255,.4);
-      position: relative; z-index: 2;
+        0 80px #0081a7,
+        50px 0 #0081a7,   50px 80px #0081a7,
+        100px 0 #0081a7, 100px 80px #0081a7,
+        150px 0 #0081a7, 150px 80px #0081a7,
+        inset 2px -1px #fff;
+    }
+
+    .candles:after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 10px;
+      border-radius: 50%;
+      top: 15px;
+      left: 0;
+      box-shadow: inset 2px -1px #fff,
+        50px 0 rgba(255,255,255,.06),
+        100px 0 rgba(255,255,255,.06),
+        150px 0 rgba(255,255,255,.06);
+    }
+
+    .shadows {
+      position: absolute;
+      width: 30px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: inset 2px -1px #fff,
+        50px 0 rgba(255,255,255,.06),
+        100px 0 rgba(255,255,255,.06),
+        150px 0 rgba(255,255,255,.06);
+      left: 0;
+      top: 15px;
+    }
+
+    .shadows:before {
+      content: "";
+      position: absolute;
+      background-color: #333;
+      width: 1.5px;
+      height: 15px;
+      left: 14.5px;
+      top: -10px;
+      box-shadow: 50px 0 #333, 100px 0 #333, 150px 0 #333;
+    }
+
+    .shadows:after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 90px;
+      left: 15px;
+      background-color: rgba(255,255,255,.1);
+      box-shadow: 50px 0 rgba(255,255,255,.1),
+        100px 0 rgba(255,255,255,.1),
+        150px 0 rgba(255,255,255,.1);
+      border-radius: 0% 100% 50% 50% / 100% 6% 10% 0%;
+    }
+
+    .flame, .flame:before,
+    .flame2, .flame2:before,
+    .flame3, .flame3:before,
+    .flame4, .flame4:before {
+      position: absolute;
+      border-radius: 80% 15% 55% 50% / 55% 15% 80% 50%;
+    }
+
+    .flame, .flame2, .flame3, .flame4 {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      transform: rotate(-45deg);
+      z-index: 4;
+      background-color: rgba(252,191,73,.8);
+      transition: opacity .5s;
+      animation: cpFlame .5s infinite;
+    }
+
+    .flame  { top: -40px; left: 0; }
+    .flame2 { top: -40px; left: 50px; }
+    .flame3 { top: -40px; left: 100px; }
+    .flame4 { top: -40px; left: 150px; }
+
+    .flame:before, .flame2:before, .flame3:before, .flame4:before {
+      content: "";
+      background-color: rgba(247,127,0,.4);
+      width: 20px;
+      height: 20px;
+      top: 5px;
+      left: 5px;
+    }
+
+    @keyframes cpFlame {
+      0%, 25%, 100% { transform: scaleY(1)   rotate(-45deg); }
+      50%, 75%      { transform: scaleY(1.1) rotate(-45deg); }
+    }
+
+    /* Blown-out state */
+    .flame.out, .flame2.out, .flame3.out, .flame4.out {
+      opacity: 0;
+      pointer-events: none;
     }
 
     #blow-btn {
-      margin-top: 28px;
+      display: block;
+      margin: 28px auto 0;
       background: linear-gradient(135deg, var(--red), var(--gold));
       border: none; border-radius: 50px;
       padding: 14px 40px;
@@ -1168,20 +1149,6 @@
       </div>
     </div>
 
-    <!-- ── YOU ── -->
-    <div class="hero-card" id="h-you" style="--pw:100%">
-      <div class="card-inner">
-        <div class="icon">
-          <img src="https://assets.stickpng.com/images/5aaa486d7603fc558cffbf7c.png" alt="You – Hero" loading="lazy"/>
-        </div>
-        <div class="card-text">
-          <h3>ΕΣΥ!</h3>
-          <span class="you-badge">★ Νέο Μέλος των Avengers ★</span>
-          <p>Ο φίλος του Ιωάννη – ο ήρωας<br>που περιμένουμε στο πάρτι!</p>
-          <div class="power-bar"><div class="power-fill"></div></div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </section>
@@ -1233,85 +1200,6 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SECTION 4 – CAKE
-════════════════════════════════════════════ -->
-<section id="cake-section">
-  <h2 class="section-title">ΣΒΗΣΕ ΤΑ ΚΕΡΑΚΙΑ!</h2>
-  <p class="section-sub">Πάτα πάνω στη φλόγα για να σβήσεις</p>
-
-  <p id="cake-msg">🎂 Πάτα σε κάθε κερί για να το σβήσεις!</p>
-
-  <!-- CSS Birthday Cake -->
-  <div class="css-cake">
-
-    <!-- 4 candles -->
-    <div class="cake-candles">
-      <div class="c-candle" onclick="blowCandle(0)">
-        <div class="c-flame-wrap" id="flame-0">
-          <div class="c-glow"></div>
-          <div class="c-flame"></div>
-        </div>
-        <div class="c-wick"></div>
-        <div class="c-body"></div>
-        <div class="c-ring"></div>
-      </div>
-      <div class="c-candle" onclick="blowCandle(1)">
-        <div class="c-flame-wrap" id="flame-1">
-          <div class="c-glow"></div>
-          <div class="c-flame"></div>
-        </div>
-        <div class="c-wick"></div>
-        <div class="c-body"></div>
-        <div class="c-ring"></div>
-      </div>
-      <div class="c-candle" onclick="blowCandle(2)">
-        <div class="c-flame-wrap" id="flame-2">
-          <div class="c-glow"></div>
-          <div class="c-flame"></div>
-        </div>
-        <div class="c-wick"></div>
-        <div class="c-body"></div>
-        <div class="c-ring"></div>
-      </div>
-      <div class="c-candle" onclick="blowCandle(3)">
-        <div class="c-flame-wrap" id="flame-3">
-          <div class="c-glow"></div>
-          <div class="c-flame"></div>
-        </div>
-        <div class="c-wick"></div>
-        <div class="c-body"></div>
-        <div class="c-ring"></div>
-      </div>
-    </div>
-
-    <!-- Tiers -->
-    <div class="cake-tiers">
-      <div class="cake-t cake-t-top">
-        <div class="t-lid"></div>
-        <div class="t-body"><span class="t-label">ΧΡΟΝΙΑ ΠΟΛΛΑ</span></div>
-        <div class="t-rim"></div>
-      </div>
-      <div class="cake-t cake-t-mid">
-        <div class="t-lid"></div>
-        <div class="t-body"><span class="t-label">AVENGERS</span></div>
-        <div class="t-rim"></div>
-      </div>
-      <div class="cake-t cake-t-base">
-        <div class="t-lid"></div>
-        <div class="t-body"><span class="t-label">ΙΩΑΝΝΗΣ</span></div>
-        <div class="t-rim"></div>
-      </div>
-    </div>
-
-    <!-- Plate -->
-    <div class="cake-plate"></div>
-
-  </div>
-
-  <br/>
-  <button id="blow-btn" onclick="blowAll()">💨 Σβήσε Όλα!</button>
-</section>
 
 <!-- ══════════════════════════════════════════
      SECTION 5 – LOCATION
@@ -1324,11 +1212,6 @@
   <div class="footer-title">ΣΕ ΠΕΡΙΜΕΝΟΥΜΕ, ΗΡΩΑ!</div>
   <p>Πάρτι γενεθλίων για τον Ιωάννη 🦸</p>
   <p>20 Απριλίου 2026 · Li La Lo · Κατερίνη</p>
-
-  <div class="rsvp-note">
-    <strong>RSVP:</strong> Παρακαλούμε επιβεβαίωσε<br>την παρουσία σου έγκαιρα!<br>
-    <strong>«Μαζί είμαστε Avengers!»</strong>
-  </div>
 
   <p class="footer-copy">© 2026 · Avengers Birthday Mission · Ioannis Assemble!</p>
 </footer>
